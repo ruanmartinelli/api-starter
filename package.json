@@ -1,0 +1,34 @@
+{
+  "name": "simple-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/standard --fix && NODE_ENV=test ava test/index.js --verbose",
+    "dev": "nodemon index",
+    "lint": "./node_modules/.bin/standard --fix"
+  },
+  "author": "Ruan Martinelli",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "express-query-boolean": "^1.0.0",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^7.4.1",
+    "knex": "^0.13.0",
+    "lodash": "^4.17.4",
+    "morgan": "^1.8.1",
+    "mysql": "^2.13.0",
+    "scrypt-for-humans": "^2.0.5",
+    "standard": "^10.0.2",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "supertest": "^3.0.0"
+  }
+}
