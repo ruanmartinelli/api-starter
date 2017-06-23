@@ -8,11 +8,11 @@ function validation (message) {
   })
 }
 
-function unauthorized () {
+function unauthorized (message) {
   return Promise.reject({
     status: 401,
     success: false,
-    message: `Please login first`
+    message: message || `Please login first`
   })
 }
 

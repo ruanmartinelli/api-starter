@@ -6,7 +6,8 @@
   "scripts": {
     "test": "./node_modules/.bin/standard --fix && NODE_ENV=test ava test/index.js --verbose",
     "dev": "nodemon index",
-    "lint": "./node_modules/.bin/standard --fix"
+    "lint": "./node_modules/.bin/standard --fix",
+    "create-db":"node src/db/create.js"
   },
   "author": "Ruan Martinelli",
   "license": "MIT",
