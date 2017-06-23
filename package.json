@@ -1,7 +1,7 @@
 {
-  "name": "simple-api",
+  "name": "api-starter",
   "version": "1.0.0",
-  "description": "",
+  "description": "node.js api",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/standard --fix && NODE_ENV=test ava test/index.js --verbose",
