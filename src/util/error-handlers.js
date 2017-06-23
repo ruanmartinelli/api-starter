@@ -17,7 +17,7 @@ function validationError (err, req, res, next) {
 }
 
 function unauthorizedError (err, req, res, next) {
-  if (!err.status || err.status !== 4011) return next(err)
+  if (!err.status || err.status !== 401) return next(err)
 
   res.status(401)
   res.send(err)
