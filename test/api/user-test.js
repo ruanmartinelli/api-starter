@@ -50,7 +50,7 @@ module.exports = (request, test) => {
     t.is(updated.name, 'James Doe')
   })
 
-  test('Users: update user', async t => {
+  test('Users: get a non-existing user returns undefined', async t => {
     const newUser = user()
     const { id } = await userService.addUser(newUser)
     const response = await request.del(`/api/user/${id}`)
