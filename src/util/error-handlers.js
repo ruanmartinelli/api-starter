@@ -23,6 +23,13 @@ function unauthorizedError (err, req, res, next) {
   res.send(err)
 }
 
+function forbiddenError (err, req, res, next) {
+  if (!err.status || err.status !== 403) return next(err)
+
+  res.status(403)
+  res.send(err)
+}
+
 function serverError (err, req, res, next) {
   console.log(`
   ${blue('✖️  ✖️  ✖️  Something went wrong:  ✖️  ✖️  ✖️')}
@@ -39,6 +46,7 @@ function serverError (err, req, res, next) {
 module.exports = {
   notFound,
   serverError,
+  forbiddenError,
   validationError,
   unauthorizedError
 }

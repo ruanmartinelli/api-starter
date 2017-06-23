@@ -18,7 +18,7 @@ function unauthorized (message) {
 
 function forbidden () {
   return Promise.reject({
-    status: 401,
+    status: 403,
     success: false,
     message: `Sorry, you don't have access to perform this action`
   })
