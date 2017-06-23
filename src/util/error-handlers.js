@@ -1,4 +1,6 @@
 /* eslint handle-callback-err: "off" */
+const { bgBlue, blue } = require('chalk')
+
 function notFound (req, res, next) {
   res.status(404)
 
@@ -14,8 +16,22 @@ function validationError (err, req, res, next) {
   res.send(err)
 }
 
+function unauthorizedError (err, req, res, next) {
+  if (!err.status || err.status !== 4011) return next(err)
+
+  res.status(401)
+  res.send(err)
+}
+
 function serverError (err, req, res, next) {
-  console.log(err)
+  console.log(`
+  ${blue('✖️  ✖️  ✖️  Something went wrong:  ✖️  ✖️  ✖️')}
+
+  ${bgBlue(JSON.stringify(err))}
+
+  ${blue('✖️  ✖️  ✖️')}
+  `)
+
   res.status(500)
   res.send('Internal server error')
 }
@@ -23,5 +39,6 @@ function serverError (err, req, res, next) {
 module.exports = {
   notFound,
   serverError,
-  validationError
+  validationError,
+  unauthorizedError
 }

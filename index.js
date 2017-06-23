@@ -17,6 +17,7 @@ app.init(server)
 
 server.use(errorHandlers.notFound)
 server.use(errorHandlers.validationError)
+server.use(errorHandlers.unauthorizedError)
 server.use(errorHandlers.serverError)
 
 server.listen(process.env.PORT, (err) => {
