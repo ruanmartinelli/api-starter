@@ -16,20 +16,19 @@ module.exports = (request, test) => {
     const { email } = savedUser
 
     const response = await request
-      .post(`/login`)
-      .send({ email, password: _password })
+      .post(`/login`,
+      { email, password: _password })
 
     t.is(response.status, 200)
-    t.is(isString(response.body.token), true)
-    t.is(isString(response.body.name), true)
-    t.is(isString(response.body.email), true)
+    t.is(isString(response.data.token), true)
+    t.is(isString(response.data.name), true)
+    t.is(isString(response.data.email), true)
     t.true(savedUser != null)
   })
 
   test('Auth: no email', async t => {
     const response = await request
-      .post(`/login`)
-      .send({ password: _password })
+      .post(`/login`, { password: _password })
 
     t.is(response.status, 401)
   })
@@ -38,8 +37,7 @@ module.exports = (request, test) => {
     const { email } = savedUser
     const wrongPassword = _password + '>12345<'
     const response = await request
-      .post(`/login`)
-      .send({ email, password: wrongPassword })
+      .post(`/login`, { email, password: wrongPassword })
 
     t.is(response.status, 401)
   })
@@ -53,8 +51,7 @@ module.exports = (request, test) => {
     t.true(users.length === 0)
 
     const response = await request
-      .post(`/login`)
-      .send(nonExistentUser)
+      .post(`/login`, nonExistentUser)
 
     t.is(response.status, 401)
   })

@@ -1,4 +1,4 @@
-// const authMiddleware = require('./auth/auth-middleware')
+const authMiddleware = require('./auth/auth-middleware')
 
 function init (app) {
   // aliasing
@@ -7,7 +7,9 @@ function init (app) {
   app.get('/', (req, res) => res.send(`<h1> server running </h1>`))
 
   require('./auth').init(app)
-  // app.use(authMiddleware)
+
+  app.use(authMiddleware)
+
   require('./user').init(app)
 }
 

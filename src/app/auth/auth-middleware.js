@@ -1,14 +1,16 @@
 const jwt = require('jsonwebtoken')
 
-async function authMiddleware (req, res, next) {
+function authMiddleware(req, res, next) {
   const token = req.headers['x-app-token'] || req.get('x-app-token')
 
-  if (!token) return next(new Error('No token provided'))
+  const forbiddenError = { message: 'No token provided', status: 403, success: false }
 
-  jwt.verify(token, process.ENV.JWT_SECRET, (err, decoded) => {
+  if (!token) return next(forbiddenError)
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return next(err)
 
-    res.locals = {}
+    res.locals = decoded
 
     next()
   })

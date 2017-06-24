@@ -7,12 +7,12 @@
     "test": "./node_modules/.bin/standard --fix && NODE_ENV=test ava test/index.js --verbose",
     "dev": "nodemon index",
     "lint": "./node_modules/.bin/standard --fix",
-    "create-db":"node src/db/create.js"
+    "create-db": "node src/db/create.js"
   },
   "author": "Ruan Martinelli",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.16.2",
     "body-parser": "^1.17.1",
     "chalk": "^1.1.3",
     "cors": "^2.8.3",

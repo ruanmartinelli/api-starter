@@ -13,7 +13,7 @@ module.exports = (request, test) => {
 
   test('Users: get all', async t => {
     const response = await request.get('/api/user')
-    const users = response.body
+    const users = response.data
     const userIds = users.map(user => user.id)
 
     t.is(response.status, 200)
@@ -26,13 +26,13 @@ module.exports = (request, test) => {
     const response = await request.get(`/api/user/${savedUser.id}`)
 
     t.is(response.status, 200)
-    t.is(isObject(response.body), true)
+    t.is(isObject(response.data), true)
   })
 
   test('Users: add new', async t => {
     const newUser = user()
-    const response = await request.post(`/api/user/`).send(newUser)
-    const saved = response.body
+    const response = await request.post(`/api/user/`, newUser)
+    const saved = response.data
 
     t.is(response.status, 200)
     t.is(isObject(saved), true)
@@ -42,8 +42,8 @@ module.exports = (request, test) => {
   test('Users: update user', async t => {
     savedUser.name = 'James Doe'
 
-    const response = await request.put(`/api/user/`).send(savedUser)
-    const updated = response.body
+    const response = await request.put(`/api/user/`, savedUser)
+    const updated = response.data
 
     t.is(response.status, 200)
     t.is(isObject(updated), true)
@@ -53,7 +53,7 @@ module.exports = (request, test) => {
   test('Users: get a non-existing user returns undefined', async t => {
     const newUser = user()
     const { id } = await userService.addUser(newUser)
-    const response = await request.del(`/api/user/${id}`)
+    const response = await request.delete(`/api/user/${id}`)
     const saved = await userService.getUser(id)
 
     t.is(response.status, 200)
@@ -63,7 +63,7 @@ module.exports = (request, test) => {
   test('Users: fail if no email provided', async t => {
     let newUser = user()
     delete newUser.email
-    const response = await request.post(`/api/user/`).send(newUser)
+    const response = await request.post(`/api/user/`, newUser)
 
     t.is(response.status, 422)
   })

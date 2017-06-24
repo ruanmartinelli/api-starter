@@ -1,36 +1,34 @@
-const _ = require('lodash')
-const jwt = require('jsonwebtoken')
-const scrypt = require('scrypt-for-humans')
-const userModel = require('../user/user-model')
-const error = require('../../util/error')
+const authService = require('./auth-service')
 
 async function login (req, res, next) {
-  const { JWT_EXPIRES_IN, JWT_SECRET } = process.env
-  const { email, password } = req.body
+  // const { JWT_EXPIRES_IN, JWT_SECRET } = process.env
+  // const { email, password } = req.body
 
-  if (!email || !password) return error.unauthorized('No email or password')
+  // if (!email || !password) return error.unauthorized('No email or password')
 
-  const user = await userModel.getUsers({ email }).then(_.head)
+  // const user = await userModel.getUsers({ email }).then(_.head)
 
-  if (!user) return error.unauthorized('User not found')
+  // if (!user) return error.unauthorized('User not found')
 
-  try {
-    await scrypt.verifyHash(password, user.password)
-  } catch (err) {
-    return error.unauthorized('Wrong password')
-  }
+  // try {
+  //   await scrypt.verifyHash(password, user.password)
+  // } catch (err) {
+  //   return error.unauthorized('Wrong password')
+  // }
 
-  const payload = {
-    name: user.name,
-    email: user.email,
-    role: user.role
-  }
+  // const payload = {
+  //   name: user.name,
+  //   email: user.email,
+  //   role: user.role
+  // }
 
-  const token = jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN
-  })
+  // const token = jwt.sign(payload, JWT_SECRET, {
+  //   expiresIn: JWT_EXPIRES_IN
+  // })
 
-  res.send({ token, email, name: user.name })
+  const result = await authService.login(req.body)
+
+  res.send(result)
 }
 
 module.exports = { login }
