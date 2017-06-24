@@ -14,6 +14,7 @@ This was tested on Node.js v7.9.0 and it uses many ES7 features.
 * [express](https://github.com/expressjs/express) web framework
 * [knex](http://knexjs.org/) for fetching data from a database
 * [ava](https://github.com/avajs) for concurrent tests
+* [nodemailer](https://nodemailer.com/about/) for sending emails
 
 ### Folder structure
 
