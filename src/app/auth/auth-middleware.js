@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-function authMiddleware(req, res, next) {
+function authMiddleware (req, res, next) {
   const token = req.headers['x-app-token'] || req.get('x-app-token')
 
   const forbiddenError = { message: 'No token provided', status: 403, success: false }
