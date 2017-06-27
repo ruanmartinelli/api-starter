@@ -19,7 +19,7 @@ function sendEmail ({ to, from, subject, content }) {
 
   console.log(`[${date}] 📧  EMAIL: ${subject} \n[${date}] 📧  TO: ${to}\n`)
 
-  return transporter.sendMail({ to, from, subject, content })
+  return transporter.sendMail({ to, from, subject, html: content })
 }
 
 module.exports = {
