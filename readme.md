@@ -7,7 +7,7 @@ Everyone needs an API these days, right?
 
 ### Requirements
 
-This was tested on Node.js v7.9.0 and it uses many ES7 features.
+This was tested on Node.js v7.9.0 and uses many ES7 features.
 
 ### Dependencies
 
@@ -32,7 +32,7 @@ Folders look like this:
 ```
 #### Notes
 
-* Folders are separated by feature, not type ([like this](http://www.javapractices.com/topic/TopicAction.do?Id=205)). 
+* Folders are separed by feature, not type ([like this](http://www.javapractices.com/topic/TopicAction.do?Id=205)). 
 * New modules/endpoint handlers should go into the ```app/``` folder.
 
 ### Get started
