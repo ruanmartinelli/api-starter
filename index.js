@@ -1,6 +1,7 @@
 require('dotenv').config()
 
-const server = require('express')()
+const express = require('express')
+const server = express()
 const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -11,6 +12,7 @@ const errorHandlers = require('./src/util/error-handlers')
 server.use(cors())
 server.use(bodyParser.json())
 server.use(boolParser())
+server.use(express.static('public'))
 server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' }))
 
 app.init(server)

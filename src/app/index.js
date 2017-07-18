@@ -4,8 +4,6 @@ function init (app) {
   // aliasing
   app.del = app.delete
 
-  app.get('/', (req, res) => res.send(`<h1> server running </h1>`))
-
   require('./auth').init(app)
 
   app.use(authMiddleware)
