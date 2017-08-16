@@ -10,6 +10,7 @@ async function login (req, res, next) {
 
   const errors = validationResult.array().map(vr => vr.msg)
 
+  // TODO: return an array of errors instead of the first
   return error.validation(errors[0])
 }
 
