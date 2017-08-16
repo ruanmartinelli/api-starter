@@ -49,7 +49,11 @@ cd <NEW_NAME>
 mv .env.example .env
 ```
 
-3. Create your database using [this script](https://github.com/ruanmartinelli/api-starter/blob/master/src/db/create.sql)
+3. Create your database:
+
+```bash
+npm run create-db
+```
 
 4. Run
 
