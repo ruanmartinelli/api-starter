@@ -39,6 +39,14 @@ module.exports = (request, test) => {
     t.true(newUser.password !== saved.password)
   })
 
+  test('Users: add new with no email', async t => {
+    let newUser = user()
+    delete newUser.email
+    const response = await request.post(`/api/user/`, newUser)
+
+    t.is(response.status, 422)
+  })
+
   test('Users: update user', async t => {
     savedUser.name = 'James Doe'
 

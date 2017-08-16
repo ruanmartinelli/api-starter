@@ -1,11 +1,7 @@
 const scrypt = require('scrypt-for-humans')
-const error = require('../../util/error')
 const userModel = require('./user-model')
 
 async function addUser (user) {
-  if (!user.email) return error.validation('Please enter a valid email address')
-  if (!user.password) return error.validation('Please enter a valid password')
-
   user.password = await scrypt.hash(user.password)
 
   return userModel.addUser(user)
