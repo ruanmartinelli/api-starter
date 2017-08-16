@@ -7,8 +7,6 @@ const error = require('../../util/error')
 async function login ({ email, password }) {
   const { JWT_EXPIRES_IN, JWT_SECRET } = process.env
 
-  if (!email || !password) return error.unauthorized('No email or password')
-
   const user = await userService.getUsers({ email }).then(_.head)
 
   if (!user) return error.unauthorized('User not found')

@@ -30,7 +30,7 @@ module.exports = (request, test) => {
     const response = await request
       .post(`/login`, { password: _password })
 
-    t.is(response.status, 401)
+    t.is(response.status, 422)
   })
 
   test('Auth: wrong password', async t => {
