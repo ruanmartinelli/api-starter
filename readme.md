@@ -40,7 +40,7 @@ Folders look like this:
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/ruanmartinelli/simple-api.git <NEW_NAME>
+git clone https://github.com/ruanmartinelli/api-starter.git <NEW_NAME>
 cd <NEW_NAME>
 ```
 2. Create the .env file and put your keys in there
@@ -49,7 +49,7 @@ cd <NEW_NAME>
 mv .env.example .env
 ```
 
-3. Create your database using [this script](https://github.com/ruanmartinelli/simple-api/blob/master/src/db/create.sql)
+3. Create your database using [this script](https://github.com/ruanmartinelli/api-starter/blob/master/src/db/create.sql)
 
 4. Run
 
