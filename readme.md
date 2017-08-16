@@ -15,6 +15,7 @@ This was tested on Node.js v7.9.0 and uses many ES7 features.
 * [knex](http://knexjs.org/) for fetching data from a database
 * [ava](https://github.com/avajs) for concurrent tests
 * [nodemailer](https://nodemailer.com/about/) for sending emails
+* [node-schedule](https://github.com/node-schedule/node-schedule) for running recurring jobs 
 
 ### Folder structure
 
@@ -26,6 +27,7 @@ Folders look like this:
 ├── /src/                       # source files
 │   ├── /db/                    # sql scripts and database connection
 │   ├── /util/                  # helpers
+|   ├── /jobs/                  # recurring jobs
 │   └── /app/                   # application modules (i.g. Users, Companies)
 ├── .env                        # put your keys and secrets here
 └── index.js                    # start server
