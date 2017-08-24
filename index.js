@@ -27,9 +27,9 @@ server.use(errorHandlers.unauthorizedError)
 server.use(errorHandlers.forbiddenError)
 server.use(errorHandlers.serverError)
 
-server.listen(process.env.PORT, (err) => {
+server.listen(process.env.APP_PORT, (err) => {
   if (err) throw err
 
-  console.log(`Listening on port ${process.env.PORT}`)
+  console.log(`Listening on port ${process.env.APP_PORT}`)
 })
 module.exports = server

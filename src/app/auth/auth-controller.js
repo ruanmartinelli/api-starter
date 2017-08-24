@@ -6,4 +6,10 @@ async function login (req, res, next) {
   res.send(result)
 }
 
-module.exports = { login }
+async function forgotPassword (req, res, next) {
+  await authService.forgotPassword(req.body)
+
+  res.sendStatus(200)
+}
+
+module.exports = { login, forgotPassword }
