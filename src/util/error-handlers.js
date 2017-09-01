@@ -34,7 +34,7 @@ function serverError (err, req, res, next) {
   console.log(`
   ${blue('✖️  ✖️  ✖️  Something went wrong:  ✖️  ✖️  ✖️')}
 
-  ${bgBlue(JSON.stringify(err))}
+  ${bgBlue((err.stack))}
 
   ${blue('✖️  ✖️  ✖️')}
   `)
