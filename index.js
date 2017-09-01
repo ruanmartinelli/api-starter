@@ -13,13 +13,14 @@ const expressValidator = require('express-validator')
 
 server.use(cors())
 server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({ extended: true }))
 server.use(expressValidator())
 server.use(boolParser())
 server.use(express.static('public'))
 server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' }))
 
-app.init(server)
 jobs.init()
+app.init(server)
 
 server.use(errorHandlers.notFound)
 server.use(errorHandlers.validationError)
