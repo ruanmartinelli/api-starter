@@ -10,7 +10,7 @@ const resetEmailTemplate = require('../../util/reset-password-template')
 
 const { JWT_EXPIRES_IN, JWT_SECRET, APP_BASE_URL, APP_NAME } = process.env
 
-async function login({ email, password }) {
+async function login ({ email, password }) {
   const user = await userService.getUsers({ email }).then(_.head)
 
   if (!user) return error.unauthorized('User not found')
@@ -34,7 +34,7 @@ async function login({ email, password }) {
   return { token, email, name: user.name }
 }
 
-async function forgotPassword({ email }) {
+async function forgotPassword ({ email }) {
   const users = await userService.getUsers({ email })
 
   if (_.isEmpty(users)) return Promise.resolve()
@@ -52,7 +52,7 @@ async function forgotPassword({ email }) {
   })
 }
 
-function sendResetForm({ token, validationText = '' }) {
+function sendResetForm ({ token, validationText = '' }) {
   try {
     const { email: userEmail } = jwt.verify(token, JWT_SECRET)
 
@@ -62,7 +62,7 @@ function sendResetForm({ token, validationText = '' }) {
   }
 }
 
-async function resetPassword({ oldPassword, password, password2, token }) {
+async function resetPassword ({ oldPassword, password, password2, token }) {
   if (!password || !password2 || !oldPassword) return error.validation('Please fill in all the fields')
   if (password !== password2) return error.validation('Password did not match')
   if (password.length < 6) return error.validation('Please enter a password with more than 6 digits')
@@ -77,7 +77,6 @@ async function resetPassword({ oldPassword, password, password2, token }) {
   const { email } = decoded
   const { id } = await userService.getUsers({ email }).then(_.head)
   await userService.updatePassword({ id, newPassword: password })
-
 }
 
 module.exports = { login, forgotPassword, sendResetForm, resetPassword }
