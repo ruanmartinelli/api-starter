@@ -56,9 +56,9 @@ module.exports = (request, test) => {
     t.is(response.status, 401)
   })
 
-  test('Auth: forgot password', async t => {
-    const response = await request.post(`/forgot`, { email: savedUser.email })
+  // test('Auth: forgot password', async t => {
+  //   const response = await request.post(`/forgot`, { email: savedUser.email })
 
-    t.is(response.status, 200)
-  })
+  //   t.is(response.status, 200)
+  // })
 }
