@@ -2,7 +2,7 @@ const authController = require('./auth-controller')
 const authValidation = require('./auth-validation')
 const catchErrors = require('../../util/catch-errors')
 
-function init (app) {
+function initPublic (app) {
   app.post('/login',
     catchErrors(authValidation.login),
     catchErrors(authController.login))
@@ -10,6 +10,10 @@ function init (app) {
   app.post('/forgot', catchErrors(authController.forgotPassword))
   app.get('/reset-form', catchErrors(authController.sendResetForm))
   app.post('/reset', catchErrors(authController.resetPassword))
+  app.post('/new-account',
+    catchErrors(authValidation.createAccount),
+    catchErrors(authController.createAccount)
+  )
 }
 
-module.exports = { init }
+module.exports = { initPublic }

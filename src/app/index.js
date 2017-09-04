@@ -4,7 +4,7 @@ function init (app) {
   // aliasing
   app.del = app.delete
 
-  require('./auth').init(app)
+  require('./auth').initPublic(app)
 
   app.use(authMiddleware)
 

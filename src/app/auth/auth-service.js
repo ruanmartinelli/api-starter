@@ -79,4 +79,16 @@ async function resetPassword ({ oldPassword, password, password2, token }) {
   await userService.updatePassword({ id, newPassword: password })
 }
 
-module.exports = { login, forgotPassword, sendResetForm, resetPassword }
+function createAccount ({ email, password, name }) {
+  return userService.addUser({
+    email, password, name, role: 'USER'
+  })
+}
+
+module.exports = {
+  login,
+  forgotPassword,
+  sendResetForm,
+  resetPassword,
+  createAccount
+}

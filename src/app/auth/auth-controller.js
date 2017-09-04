@@ -24,4 +24,16 @@ async function resetPassword (req, res, next) {
   res.sendStatus(200)
 }
 
-module.exports = { login, forgotPassword, sendResetForm, resetPassword }
+async function createAccount (req, res, next) {
+  const user = req.body
+  await authService.createAccount(user)
+  res.sendStatus(200)
+}
+
+module.exports = {
+  login,
+  forgotPassword,
+  sendResetForm,
+  resetPassword,
+  createAccount
+}

@@ -1,6 +1,7 @@
-const { isString } = require('lodash')
+const { isString, isArray } = require('lodash')
 const { user } = require('../helpers/user')
 const userService = require('../../src/app/user/user-service')
+const faker = require('faker')
 
 module.exports = (request, test) => {
   let savedUser = {}
@@ -45,7 +46,6 @@ module.exports = (request, test) => {
   test('Auth: user does not exist', async t => {
     const nonExistentUser = { email: 'llllll.l.l.p@internet.cn', password: '&888&88&8' }
 
-    // we have to check if it really does not exist, right ¯\_(ツ)_/¯
     const users = await userService.getUsers({ email: nonExistentUser.email })
 
     t.true(users.length === 0)
@@ -56,9 +56,34 @@ module.exports = (request, test) => {
     t.is(response.status, 401)
   })
 
-  // test('Auth: forgot password', async t => {
-  //   const response = await request.post(`/forgot`, { email: savedUser.email })
+  test('Auth: create account', async t => {
+    // fake user
+    const _user = {
+      email: faker.internet.email(),
+      name: faker.name.findName(),
+      password: faker.internet.password()
+    }
 
-  //   t.is(response.status, 200)
-  // })
+    // save
+    const response = await request.post(`/new-account`, _user)
+
+    // get saved user from db
+    const saved = await userService.getUsers({
+      email: _user.email
+    })
+
+    t.true(isArray(saved))
+    t.is(saved[0].email, _user.email)
+    t.true(saved[0].password !== _user.password)
+    t.is(response.status, 200)
+  })
+
+  test('Auth: validate create account', async t => {
+    const response = await request.post(`/new-account`, {
+      name: faker.name.findName(),
+      password: faker.internet.password()
+    })
+
+    t.is(response.status, 422)
+  })
 }
