@@ -30,6 +30,7 @@
     "node-schedule": "^1.2.4",
     "nodemailer": "^4.0.1",
     "nodemon": "^1.11.0",
+    "rimraf": "^2.6.1",
     "scrypt-for-humans": "^2.0.5",
     "standard": "^10.0.2",
     "uuid": "^3.0.1"
