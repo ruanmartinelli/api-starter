@@ -1,5 +1,6 @@
 const qb = require('./')
 const { DB_DATABASE } = process.env
+const userService = require('../app/user/user-service')
 
 const connection = require('knex')({
   client: 'mysql',
@@ -11,7 +12,7 @@ const connection = require('knex')({
   debug: false
 })
 
-async function run () {
+async function run() {
   try {
     await qb.raw('select 1;')
   } catch (err) {
@@ -21,7 +22,7 @@ async function run () {
   await connection.raw(`CREATE DATABASE IF NOT EXISTS ${DB_DATABASE};`)
 
   await qb.raw(`
-  CREATE TABLE \`users\` (
+  CREATE TABLE IF NOT EXISTS \`users\` (
     \`id\` bigint(20) NOT NULL AUTO_INCREMENT,
     \`email\` varchar(255) NOT NULL,
     \`name\` varchar(255) NOT NULL,
@@ -34,6 +35,12 @@ async function run () {
     PRIMARY KEY (\`id\`),
     UNIQUE KEY \`usuario_email_unique\` (\`email\`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;`)
+
+  await userService.addUser({
+    name: 'Test User',
+    email: 'jane@test.com',
+    password: '123test'
+  })
 
   console.log('Done!')
 
