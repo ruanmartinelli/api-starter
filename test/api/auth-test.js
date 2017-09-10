@@ -78,6 +78,29 @@ module.exports = (request, test) => {
     t.is(response.status, 200)
   })
 
+  test('Auth: validate duplicated email when creating accountt', async t => {
+    const email = faker.internet.email()
+
+    // fake users
+    const _user = {
+      email,
+      name: faker.name.findName(),
+      password: faker.internet.password()
+    }
+
+    const _user2 = {
+      email,
+      name: faker.name.findName(),
+      password: faker.internet.password()
+    }
+
+    const responseFirstUser = await request.post(`/new-account`, _user)
+    const responseSecondUser = await request.post(`/new-account`, _user2)
+
+    t.is(responseFirstUser.status, 200)
+    t.is(responseSecondUser.status, 422)
+  })
+
   test('Auth: validate create account', async t => {
     const response = await request.post(`/new-account`, {
       name: faker.name.findName(),

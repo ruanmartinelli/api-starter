@@ -12,7 +12,7 @@ const connection = require('knex')({
   debug: false
 })
 
-async function run() {
+async function run () {
   try {
     await qb.raw('select 1;')
   } catch (err) {
