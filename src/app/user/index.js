@@ -9,7 +9,7 @@ function init (app) {
   app.get('/api/user/', catchErrors(userController.getUsers))
 
   app.post('/api/user',
-    catchErrors(userValidation.addUser),
+    userValidation.addUser(),
     catchErrors(userController.addUser))
 
   app.put('/api/user', catchErrors(userController.updateUser))

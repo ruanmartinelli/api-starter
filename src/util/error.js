@@ -8,6 +8,14 @@ function validation (message) {
   })
 }
 
+function validation2 (message) {
+  return {
+    status: 422,
+    success: false,
+    message
+  }
+}
+
 function unauthorized (message) {
   return Promise.reject({
     status: 401,
@@ -27,5 +35,6 @@ function forbidden () {
 module.exports = {
   validation,
   forbidden,
-  unauthorized
+  unauthorized,
+  validation2
 }

@@ -6,10 +6,12 @@ const faker = require('faker')
 module.exports = (request, test) => {
   let savedUser = {}
   let _password
+  let _email
 
   test.before(async t => {
     const u = user()
     _password = u.password
+    _email = u.email
     savedUser = await userService.addUser(u)
   })
 
@@ -30,6 +32,12 @@ module.exports = (request, test) => {
   test('Auth: no email', async t => {
     const response = await request
       .post(`/login`, { password: _password })
+    t.is(response.status, 422)
+  })
+
+  test('Auth: no email', async t => {
+    const response = await request
+      .post(`/login`, { email: _email })
 
     t.is(response.status, 422)
   })

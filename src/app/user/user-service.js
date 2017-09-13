@@ -8,7 +8,7 @@ async function addUser (user) {
   const savedUser = await userModel.getUsers({ email })
 
   if (!isEmpty(savedUser)) {
-    return error.validation('User already exists')
+    throw error.validation2('User already exists')
   }
 
   user.password = await scrypt.hash(user.password)

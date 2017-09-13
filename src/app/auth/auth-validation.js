@@ -1,31 +1,21 @@
-const error = require('../../util/error')
+const handleValidations = require('../../util/handle-validation')
+const { check } = require('express-validator/check')
 
-async function login (req, res, next) {
-  req.checkBody('email', 'No email or password').notEmpty()
-  req.checkBody('password', 'No email or password').notEmpty()
-
-  const validationResult = await req.getValidationResult()
-
-  if (validationResult.isEmpty()) return next()
-
-  const errors = validationResult.array().map(vr => vr.msg)
-
-  // TODO: return an array of errors instead of the first
-  return error.validation(errors[0])
+function login () {
+  return [
+    check('email').not().isEmpty().withMessage('No email or password!'),
+    check('password').exists().withMessage('No email or password'),
+    handleValidations
+  ]
 }
 
-async function createAccount (req, res, next) {
-  req.checkBody('email', 'Please enter email').notEmpty()
-  req.checkBody('password', 'Please enter password').notEmpty()
-  req.checkBody('name', 'Please enter name').notEmpty()
-
-  const validationResult = await req.getValidationResult()
-
-  if (validationResult.isEmpty()) return next()
-
-  const errors = validationResult.array().map(vr => vr.msg)
-
-  return error.validation(errors[0])
+function createAccount () {
+  return [
+    check('email', 'Please enter email').exists(),
+    check('password', 'Please enter password').exists(),
+    check('name', 'Please enter name').exists(),
+    handleValidations
+  ]
 }
 
 module.exports = {

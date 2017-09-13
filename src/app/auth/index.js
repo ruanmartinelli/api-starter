@@ -4,14 +4,15 @@ const catchErrors = require('../../util/catch-errors')
 
 function initPublic (app) {
   app.post('/login',
-    catchErrors(authValidation.login),
-    catchErrors(authController.login))
+    authValidation.login(),
+    catchErrors(authController.login)
+  )
 
   app.post('/forgot', catchErrors(authController.forgotPassword))
   app.get('/reset-form', catchErrors(authController.sendResetForm))
   app.post('/reset', catchErrors(authController.resetPassword))
   app.post('/new-account',
-    catchErrors(authValidation.createAccount),
+    authValidation.createAccount(),
     catchErrors(authController.createAccount)
   )
 }
