@@ -63,17 +63,16 @@ function sendResetForm ({ token, validationText = '' }) {
 }
 
 async function resetPassword ({ oldPassword, password, password2, token }) {
-  if (!password || !password2 || !oldPassword) throw error.validation('Please fill in all the fields')
-  if (password !== password2) throw error.validation('Password did not match')
-  if (password.length < 6) throw error.validation('Please enter a password with more than 6 digits')
-
   let decoded
 
   try {
     decoded = jwt.verify(token, JWT_SECRET)
   } catch (err) {
-    throw error.validation('This session has expired.')
+    throw error.forbidden()
   }
+
+  // TODO: check if oldPassword matches
+
   const { email } = decoded
   const { id } = await userService.getUsers({ email }).then(_.head)
   await userService.updatePassword({ id, newPassword: password })

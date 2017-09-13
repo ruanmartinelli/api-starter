@@ -19,7 +19,13 @@ async function sendResetForm (req, res, next) {
 }
 
 async function resetPassword (req, res, next) {
-  const { oldpwd: oldPassword, pwd: password, pwd2: password2, t: token } = req.body
+  const {
+    oldpwd: oldPassword,
+    pwd: password,
+    pwd2: password2,
+    t: token
+  } = req.body
+
   await authService.resetPassword({ oldPassword, password, password2, token })
   res.sendStatus(200)
 }
