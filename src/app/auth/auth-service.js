@@ -13,12 +13,12 @@ const { JWT_EXPIRES_IN, JWT_SECRET, APP_BASE_URL, APP_NAME } = process.env
 async function login ({ email, password }) {
   const user = await userService.getUsers({ email }).then(_.head)
 
-  if (!user) return error.unauthorized('User not found')
+  if (!user) throw error.unauthorized('User not found')
 
   try {
     await scrypt.verifyHash(password, user.password)
   } catch (err) {
-    return error.unauthorized('Wrong password')
+    throw error.unauthorized('Wrong password')
   }
 
   const payload = {
@@ -63,16 +63,16 @@ function sendResetForm ({ token, validationText = '' }) {
 }
 
 async function resetPassword ({ oldPassword, password, password2, token }) {
-  if (!password || !password2 || !oldPassword) return error.validation('Please fill in all the fields')
-  if (password !== password2) return error.validation('Password did not match')
-  if (password.length < 6) return error.validation('Please enter a password with more than 6 digits')
+  if (!password || !password2 || !oldPassword) throw error.validation('Please fill in all the fields')
+  if (password !== password2) throw error.validation('Password did not match')
+  if (password.length < 6) throw error.validation('Please enter a password with more than 6 digits')
 
   let decoded
 
   try {
     decoded = jwt.verify(token, JWT_SECRET)
   } catch (err) {
-    return error.validation('This session has expired.')
+    throw error.validation('This session has expired.')
   }
   const { email } = decoded
   const { id } = await userService.getUsers({ email }).then(_.head)

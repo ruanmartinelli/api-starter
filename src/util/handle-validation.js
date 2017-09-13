@@ -7,6 +7,6 @@ module.exports = async (req, res, next) => {
     return next()
   } catch (err) {
     const firstError = err.array().map(vr => vr.msg)[0]
-    return next(error.validation2(firstError))
+    return next(error.validation(firstError))
   }
 }

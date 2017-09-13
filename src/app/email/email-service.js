@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 function sendEmail ({ to, from, subject, content }) {
   if (!from) from = process.env.APP_EMAIL_SENDER
-  if (!to || !subject) return error.validation('Error sending email')
+  if (!to || !subject) throw error.validation('Error sending email')
 
   const date = moment().format('MM/DD hh:mm:ss')
 
