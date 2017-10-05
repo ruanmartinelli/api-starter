@@ -1,0 +1,27 @@
+dist: trusty
+
+language: node_js
+
+node_js:
+  - "7"
+
+services:
+  - mysql
+
+env:
+  DB_HOST=127.0.0.1
+  DB_USER=root
+  DB_PASSWORD=''
+  DB_DATABASE=travis_db
+  APP_PORT=9910
+  JWT_SECRET=a10ec58a-a0f2-4ac4-8393-c866d813b8d1
+  JWT_EXPIRES_IN=86400
+
+before_install:
+  - mysql -u "root" -e 'CREATE DATABASE travis_db;'
+
+before_script:
+  - npm run create-db
+
+script:
+  - npm test

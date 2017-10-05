@@ -13,7 +13,8 @@
     "lint": "./node_modules/.bin/standard src/**",
     "lint:fix": "./node_modules/.bin/standard  src/** --fix",
     "docs": "./node_modules/.bin/apidoc -i src/ -o docs",
-    "docs:serve": "npm run docs && npm run dev"
+    "docs:serve": "npm run docs && npm run dev",
+    "create-db":"node src/script/create-db.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
