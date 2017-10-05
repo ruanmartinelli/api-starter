@@ -1,26 +1,28 @@
-const app = require('../')
-const test = require('ava')
-const axios = require('axios')
-const authService = require('../src/app/auth/auth-service')
-const userService = require('../src/app/user/user-service')
-const { user } = require('./helpers/user')
+import 'dotenv/config'
+
+import '../src/index.js'
+import test from 'ava'
+import axios from 'axios'
+
+import { createUser } from './helpers/user'
+import userController from 'app/user/user-controller'
+import authController from 'app/auth/auth-controller'
 
 test.before(async t => {
-  app.listen()
-
-  const _user = user()
+  const _user = createUser()
   const { email, password } = _user
 
-  await userService.addUser(_user)
+  await userController.addUser(_user)
 
-  const { token } = await authService.login({ email, password })
+  const { token } = await authController.login({ email, password })
 
-  axios.defaults.baseURL = 'http://localhost:9910/'
-  axios.defaults.headers.common['x-app-token'] = token
-  axios.defaults.validateStatus = (status) => (status >= 200 && status < 500)
+  axios.defaults.baseURL = `http://localhost:${process.env.APP_PORT}/`
+  axios.defaults.headers.common['Authorization'] = token
+
+  // Disable axios default option that throws an error for HTTP codes >= 300
+  axios.defaults.validateStatus = status => status >= 200 && status < 500
 })
 
-// import test modules below
 require('./api/error-test')(axios, test)
 require('./api/user-test')(axios, test)
 require('./api/auth-test')(axios, test)

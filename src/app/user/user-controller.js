@@ -1,37 +1,47 @@
-const userService = require('./user-service')
+import { isEmpty } from 'lodash'
+import scrypt from 'scrypt-for-humans'
 
-async function getUsers (req, res, next) {
-  const users = await userService.getUsers(req.query)
+import error from 'util/error'
+import userModel from './user-model'
 
-  res.send(users)
-}
-async function getUser (req, res, next) {
-  const { id } = req.params
-  const user = await userService.getUser(id)
-
-  res.send(user)
+function getUsers ({ id, email }) {
+  return userModel.getUsers({ id, email })
 }
 
-async function addUser (req, res, next) {
-  const user = await userService.addUser(req.body)
-  res.send(user)
+function getUser ({ id }) {
+  return userModel.getUser(id)
 }
 
-async function updateUser (req, res, next) {
-  const user = await userService.updateUser(req.body)
-  res.send(user)
+async function addUser (user, options) {
+  const { email } = user
+  const savedUser = await userModel.getUsers({ email })
+
+  if (!isEmpty(savedUser)) {
+    throw error.validation('User already exists')
+  }
+
+  // Hashes user password
+  user.password = await scrypt.hash(user.password)
+
+  return userModel.addUser(user)
 }
 
-async function removeUser (req, res, next) {
-  const { id } = req.params
-  await userService.removeUser(id)
-  res.sendStatus(200)
+function updateUser (user, options) {
+  if (!user.id) {
+    throw error.validation('No ID provided')
+  }
+
+  return userModel.updateUser(user)
 }
 
-module.exports = {
-  getUsers,
+function removeUser ({ id }) {
+  return userModel.removeUser(id)
+}
+
+export default {
   getUser,
   addUser,
+  getUsers,
   updateUser,
   removeUser
 }

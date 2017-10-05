@@ -1,14 +1,19 @@
-const authMiddleware = require('./auth/auth-middleware')
+import authRoutes from './auth'
+import userRoutes from './user'
+import authMiddleware from './auth/auth-middleware'
 
 function init (app) {
-  // aliasing
+  // Alias delete with del
   app.del = app.delete
 
-  require('./auth').initPublic(app)
+  authRoutes.initPublic(app)
+  userRoutes.initPublic(app)
 
+  // Routes below this middleware shoud be
+  // prefixed with "/api/" and require an access token
   app.use(authMiddleware)
 
-  require('./user').init(app)
+  userRoutes.initPrivate(app)
 }
 
 module.exports = { init }

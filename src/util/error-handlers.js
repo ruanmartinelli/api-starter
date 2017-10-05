@@ -1,11 +1,12 @@
-/* eslint handle-callback-err: "off" */
-const { bgBlue, blue } = require('chalk')
+import { bgBlue, blue } from 'chalk'
 
 function notFound (req, res, next) {
   res.status(404)
 
   res.send({
-    status: 404, success: false, message: 'Route not found'
+    status: 404,
+    success: false,
+    message: 'Route not found'
   })
 }
 
@@ -34,7 +35,7 @@ function serverError (err, req, res, next) {
   console.log(`
   ${blue('✖️  ✖️  ✖️  Something went wrong:  ✖️  ✖️  ✖️')}
 
-  ${bgBlue((err.stack))}
+  ${bgBlue(err.stack)}
 
   ${blue('✖️  ✖️  ✖️')}
   `)
@@ -43,7 +44,7 @@ function serverError (err, req, res, next) {
   res.send('Internal server error')
 }
 
-module.exports = {
+export default {
   notFound,
   serverError,
   forbiddenError,

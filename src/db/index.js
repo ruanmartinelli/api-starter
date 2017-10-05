@@ -1,6 +1,7 @@
-require('dotenv').config()
+import 'dotenv/config'
+import knex from 'knex'
 
-const knex = require('knex')({
+export default knex({
   client: 'mysql',
   connection: {
     host: process.env.DB_HOST,
@@ -10,5 +11,3 @@ const knex = require('knex')({
   },
   debug: false
 })
-
-module.exports = knex

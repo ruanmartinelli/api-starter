@@ -1,11 +1,9 @@
-/* eslint prefer-promise-reject-errors: "off" */
-
 function validation (message) {
-  return ({
+  return {
     status: 422,
     success: false,
     message
-  })
+  }
 }
 
 function unauthorized (message) {
@@ -24,9 +22,8 @@ function forbidden () {
   }
 }
 
-module.exports = {
+export default {
   validation,
   forbidden,
   unauthorized
-
 }

@@ -1,18 +1,28 @@
 {
   "name": "api-starter",
-  "version": "1.0.0",
-  "description": "node.js api",
-  "main": "index.js",
-  "scripts": {
-    "test": "./node_modules/.bin/standard --fix && NODE_ENV=test ava test/index.js --verbose",
-    "dev": "nodemon index",
-    "lint": "./node_modules/.bin/standard --fix",
-    "create-db": "node src/db/create.js"
-  },
-  "author": "Ruan Martinelli",
+  "version": "0.1.0",
   "license": "MIT",
+  "description": "Starting point for a Node.js API",
+  "author": "Ruan Martinelli <martinelliruan@gmail.com>",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev":
+      "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
+    "test": "npm run lint:fix && NODE_ENV=test ava test/index.js --verbose",
+    "test:watch": "NODE_ENV=test ava test/index.js --verbose --watch",
+    "lint": "./node_modules/.bin/standard src/**",
+    "lint:fix": "./node_modules/.bin/standard  src/** --fix",
+    "docs": "./node_modules/.bin/apidoc -i src/ -o docs",
+    "docs:serve": "npm run docs && npm run dev"
+  },
   "dependencies": {
     "axios": "^0.16.2",
+    "babel-plugin-module-resolver": "^2.7.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
     "body-parser": "^1.17.1",
     "chalk": "^1.1.3",
     "cors": "^2.8.3",
@@ -21,22 +31,28 @@
     "express-query-boolean": "^1.0.0",
     "express-validator": "^4.1.1",
     "faker": "^4.1.0",
+    "firebase": "^4.5.0",
+    "joi": "^11.1.1",
     "jsonwebtoken": "^7.4.1",
     "knex": "^0.13.0",
     "lodash": "^4.17.4",
-    "moment": "^2.18.1",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
-    "node-schedule": "^1.2.4",
-    "nodemailer": "^4.0.1",
-    "nodemon": "^1.11.0",
-    "rimraf": "^2.6.1",
     "scrypt-for-humans": "^2.0.5",
-    "standard": "^10.0.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "nodemon": "^1.11.0",
+    "apidoc": "^0.17.6",
     "ava": "^0.19.1",
+    "standard": "^10.0.2",
     "supertest": "^3.0.0"
+  },
+  "ava": {
+    "babel": "inherit",
+    "require": ["babel-register"]
+  },
+  "engines": {
+    "node": "7.10.1"
   }
 }

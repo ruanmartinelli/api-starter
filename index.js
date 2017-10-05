@@ -1,36 +1,4 @@
 require('dotenv').config()
-
-const express = require('express')
-const server = express()
-const cors = require('cors')
-const morgan = require('morgan')
-const bodyParser = require('body-parser')
-const boolParser = require('express-query-boolean')
-const app = require('./src/app/')
-const jobs = require('./src/jobs')
-const errorHandlers = require('./src/util/error-handlers')
-const expressValidator = require('express-validator')
-
-server.use(cors())
-server.use(bodyParser.json())
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(expressValidator())
-server.use(boolParser())
-server.use(express.static('public'))
-server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' }))
-
-jobs.init()
-app.init(server)
-
-server.use(errorHandlers.notFound)
-server.use(errorHandlers.validationError)
-server.use(errorHandlers.unauthorizedError)
-server.use(errorHandlers.forbiddenError)
-server.use(errorHandlers.serverError)
-
-server.listen(process.env.APP_PORT, (err) => {
-  if (err) throw err
-
-  console.log(`Listening on port ${process.env.APP_PORT}`)
-})
-module.exports = server
+require('babel-core/register')()
+require('babel-polyfill')
+require('./src/index.js')

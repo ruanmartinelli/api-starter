@@ -1,45 +1,36 @@
-const authService = require('./auth-service')
+import 'dotenv/config'
+import _ from 'lodash'
+import jwt from 'jsonwebtoken'
+import scrypt from 'scrypt-for-humans'
+import error from 'util/error'
+import userController from 'app/user/user-controller'
 
-async function login (req, res, next) {
-  const result = await authService.login(req.body)
+const { JWT_EXPIRES_IN, JWT_SECRET } = process.env
 
-  res.send(result)
+async function login ({ email, password }) {
+  const user = await userController.getUsers({ email }).then(_.head)
+
+  if (!user) throw error.unauthorized('User not found')
+
+  // Verify password
+  try {
+    await scrypt.verifyHash(password, user.password)
+  } catch (err) {
+    throw error.unauthorized('Wrong password')
+  }
+
+  const payload = {
+    id: user.id,
+    name: user.name,
+    email: user.email
+  }
+
+  // Create JWT token
+  const token = jwt.sign(payload, JWT_SECRET, {
+    expiresIn: JWT_EXPIRES_IN
+  })
+
+  return { token, email, name: user.name }
 }
 
-async function forgotPassword (req, res, next) {
-  await authService.forgotPassword(req.body)
-
-  res.sendStatus(200)
-}
-
-async function sendResetForm (req, res, next) {
-  const { t: token } = req.query
-  const result = authService.sendResetForm({ token })
-  res.send(result)
-}
-
-async function resetPassword (req, res, next) {
-  const {
-    oldpwd: oldPassword,
-    pwd: password,
-    pwd2: password2,
-    t: token
-  } = req.body
-
-  await authService.resetPassword({ oldPassword, password, password2, token })
-  res.sendStatus(200)
-}
-
-async function createAccount (req, res, next) {
-  const user = req.body
-  await authService.createAccount(user)
-  res.sendStatus(200)
-}
-
-module.exports = {
-  login,
-  forgotPassword,
-  sendResetForm,
-  resetPassword,
-  createAccount
-}
+export default { login }

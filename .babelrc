@@ -1,0 +1,17 @@
+{
+  "presets": ["env", "stage-0"],
+  "plugins": [
+    "transform-runtime",
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "db": "./src/db",
+          "app": "./src/app",
+          "util": "./src/util"
+        }
+      }
+    ]
+  ]
+}
