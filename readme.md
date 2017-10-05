@@ -1,6 +1,7 @@
 # API Starter
 
 <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
+[![Build Status](https://travis-ci.org/ruanmartinelli/api-starter.svg?branch=master)](https://travis-ci.org/ruanmartinelli/api-starter)
 
 > Everyone needs an API these days, right?
 
