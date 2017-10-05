@@ -162,6 +162,7 @@ export default { init }
 
 - Folder and file names are always on singular (eg. `*-controller.js`, `script/` )
 - `function x() { }` is better than `const x = () => {}`
+- All [Standard](https://standardjs.com) rules
 
 ### License
 
