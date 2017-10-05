@@ -8,6 +8,7 @@ import expressValidator from 'express-validator'
 import app from 'app/'
 import errorHandlers from 'util/error-handlers'
 import checkEnvVars from 'util/check-env-vars'
+import jobs from './job'
 // import { initFirebase } from 'util/firebase'
 
 checkEnvVars()
@@ -25,6 +26,7 @@ server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' }))
 
 // initFirebase()
 
+jobs.init()
 app.init(server)
 
 server.use(errorHandlers.notFound)
