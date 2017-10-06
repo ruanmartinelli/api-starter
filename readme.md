@@ -53,10 +53,10 @@ cd <NEW_NAME>
 mv .env.example .env
 ```
 
-3. Create the database:
+3. Create the MySQL database:
 
 ```bash
-# See src/script/db.sql
+npm run create-db
 ```
 
 4. Run
