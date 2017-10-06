@@ -31,6 +31,7 @@ Folders look like this:
 │   ├── /db/                    # Database connection module
 │   ├── /util/                  # Reusable modules
 |   ├── /script/                # SQL, bash, JS, etc.
+|   ├── /job/                   # Recurring jobs
 │   └── /app/                   # API modules (i.g. Users, Contacts)
 ├── .env                        # Env. secrets and credentials 
 ├── index.js                    # Entry file
