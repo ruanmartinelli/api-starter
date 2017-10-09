@@ -136,7 +136,7 @@ function initPrivate (app) { }
 export default { initPublic, initPrivate }
 ```
 
-3. Import and init the functions on the app entry file:
+3. Import and init the functions on the app entry file (`src/app/index.js`):
 
 ```js
 import unicornRoutes from './unicorn'
