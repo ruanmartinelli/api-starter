@@ -5,7 +5,7 @@
   "description": "Starting point for a Node.js API",
   "author": "Ruan Martinelli <martinelliruan@gmail.com>",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production npm run database:latest && NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
     "test": "npm run lint:fix && NODE_ENV=test ava test/index.js --verbose",
     "test:watch": "NODE_ENV=test ava test/index.js --verbose --watch",
@@ -13,7 +13,8 @@
     "lint:fix": "./node_modules/.bin/standard  src/** --fix",
     "docs": "./node_modules/.bin/apidoc -i src/ -o docs",
     "docs:serve": "npm run docs && npm run dev",
-    "create-db": "node src/script/create-db.js"
+    "database:latest": "./node_modules/.bin/knex migrate:latest",
+    "database:rollback": "./node_modules/.bin/knex migrate:rollback"
   },
   "dependencies": {
     "axios": "^0.16.2",
