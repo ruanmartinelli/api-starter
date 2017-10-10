@@ -30,7 +30,8 @@ module.exports = (request, test) => {
 
   test('Users: update existing user', async t => {
     const user = Object.assign(_user, { username: 'NedStark11' })
-    const { data: updated, status } = await request.put(`/api/user/`, user)
+    // prettier-ignore
+    const { data: updated, status } = await request.put(`/api/user/${user.id}`, user)
 
     t.is(status, 200)
     t.is(isObject(updated), true)
@@ -41,7 +42,7 @@ module.exports = (request, test) => {
   test('Users: invalid user returns 422', async t => {
     const user = Object.assign({}, _user)
     delete user.username
-    const { data, status } = await request.put(`/api/user/`, user)
+    const { data, status } = await request.put(`/api/user/${user.id}`, user)
 
     t.is(status, 422)
     t.is(data.success, false)

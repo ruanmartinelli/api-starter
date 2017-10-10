@@ -77,7 +77,7 @@ function initPrivate (app) {
    *    "username": "danny_stormborn"
    *   }
    */
-  app.put('/api/user', http(userController.updateUser))
+  app.put('/api/user/:id', http(userController.updateUser))
 
    /**
    * @api {delete} /api/user/:id Remove user

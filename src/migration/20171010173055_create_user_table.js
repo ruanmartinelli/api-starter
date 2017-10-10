@@ -4,7 +4,7 @@ exports.up = (knex, Promise) => {
     table.string('name').notNullable()
     table.string('email').notNullable().unique()
     table.string('password')
-    table.string('username')
+    table.string('username').notNullable()
     table.timestamp('createdAt').defaultTo(knex.raw('now()'))
     table.timestamp('updatedAt').defaultTo(knex.raw('now()'))
   })

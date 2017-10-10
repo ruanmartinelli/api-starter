@@ -5,22 +5,25 @@ import qb from 'db' // qb stands for query builder
 import validateSchema from 'util/validate-schema'
 
 const table = 'user'
+const columns = [
+  'id as id',
+  'email as email',
+  'name as name',
+  'username as username',
+  'password as password'
+]
 
 // prettier-ignore
 const UserSchema = Joi.object({
   id: Joi.number().integer(),
   email: Joi.string().email().max(255).required(),
   name: Joi.string().max(255).required(),
-  username: Joi.string().min(3).max(30).required(),
-  password: Joi.string().max(255).required()
+  username: Joi.string().min(3).max(255).required(),
+  password: Joi.string().max(255)
 })
 
-function getUsers (filter) {
-  const columns = ['id', 'email', 'name', 'username', 'password']
-
-  const query = qb
-    .select(columns)
-    .from(table)
+function getUsers(filter) {
+  const query = qb.select(columns).from(table)
 
   if (filter.id) query.where('id', filter.id)
   if (filter.email) query.where('email', filter.email)
@@ -29,11 +32,11 @@ function getUsers (filter) {
   return query
 }
 
-function getUser (id) {
+function getUser(id) {
   return getUsers({ id }).then(users => head(users) || {})
 }
 
-async function addUser (user) {
+async function addUser(user) {
   user = validateSchema(user, UserSchema)
 
   const id = await qb(table)
@@ -43,10 +46,8 @@ async function addUser (user) {
   return getUsers({ id }).then(head)
 }
 
-async function updateUser (user) {
+async function updateUser(user, id) {
   user = validateSchema(user, UserSchema)
-
-  const { id } = user
 
   await qb(table)
     .update(user)
@@ -55,7 +56,7 @@ async function updateUser (user) {
   return getUsers({ id }).then(head)
 }
 
-function removeUser (id) {
+function removeUser(id) {
   return qb(table)
     .where(`${table}.id`, id)
     .del()
