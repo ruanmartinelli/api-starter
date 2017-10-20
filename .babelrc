@@ -1,15 +1,21 @@
 {
-  "presets": ["env", "stage-0"],
+  "presets": [
+    "env",
+    "stage-0"
+  ],
   "plugins": [
     "transform-runtime",
     [
       "module-resolver",
       {
-        "root": ["./"],
+        "root": [
+          "./"
+        ],
         "alias": {
           "db": "./src/db",
           "app": "./src/app",
-          "util": "./src/util"
+          "util": "./src/util",
+          "schema": "./src/schema"
         }
       }
     ]
