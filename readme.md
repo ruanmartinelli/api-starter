@@ -31,6 +31,7 @@ Folders look like this:
 │   ├── /db/                    # Database connection module
 │   ├── /util/                  # Reusable modules
 |   ├── /script/                # SQL, bash, JS, etc.
+|   ├── /job/                   # Recurring jobs
 │   └── /app/                   # API modules (i.g. Users, Contacts)
 ├── .env                        # Env. secrets and credentials 
 ├── index.js                    # Entry file
@@ -53,10 +54,10 @@ cd <NEW_NAME>
 mv .env.example .env
 ```
 
-3. Create the database:
+3. Create the MySQL database:
 
 ```bash
-# See src/script/db.sql
+npm run create-db
 ```
 
 4. Run
@@ -135,7 +136,7 @@ function initPrivate (app) { }
 export default { initPublic, initPrivate }
 ```
 
-3. Import and init the functions on the app entry file:
+3. Import and init the functions on the app entry file (`src/app/index.js`):
 
 ```js
 import unicornRoutes from './unicorn'
