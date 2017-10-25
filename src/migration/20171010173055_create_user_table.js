@@ -1,6 +1,6 @@
 exports.up = (knex, Promise) => {
   return knex.schema.createTableIfNotExists('user', table => {
-    table.increments('id').notNullable.primary()
+    table.increments('id').notNullable().primary()
     table.string('name').notNullable()
     table.string('email').notNullable().unique()
     table.string('password')
