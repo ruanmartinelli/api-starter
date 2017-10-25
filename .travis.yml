@@ -1,5 +1,3 @@
-dist: trusty
-
 language: node_js
 
 node_js:
@@ -16,13 +14,14 @@ env:
   DB_PASSWORD=
   DB_DATABASE=travis_db
   JWT_SECRET=a10ec58a-a0f2-4ac4-8393-c866d813b8d1
-  JWT_EXPIRES_IN=86400
+  JWT_EXPIRES_IN=1h
 
 before_install:
   - mysql -u "root" -e 'CREATE DATABASE travis_db;'
 
 before_script:
-  - npm run create-db
+  - npm i -g knex
+  - npm run database:latest
 
 script:
   - npm test
