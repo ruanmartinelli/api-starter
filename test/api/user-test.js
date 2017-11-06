@@ -39,7 +39,7 @@ module.exports = (request, test) => {
     t.is(updated.username, 'NedStark11')
   })
 
-  test('Users: invalid user returns 422', async t => {
+  test('Users: update invalid user returns 422', async t => {
     const user = Object.assign({}, _user)
     delete user.username
     const { data, status } = await request.put(`/api/user/${user.id}`, user)
