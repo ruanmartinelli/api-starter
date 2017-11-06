@@ -3,13 +3,14 @@ import scrypt from 'scrypt-for-humans'
 
 import error from 'util/error'
 import userModel from './user-model'
+import User from 'model/user'
 
 function getUsers({ id, email }) {
-  return userModel.getUsers({ id, email })
+  return User.find({ id, email })
 }
 
 function getUser({ id }) {
-  return userModel.getUser(id)
+  return User.findById(id)
 }
 
 async function addUser(user, options) {
@@ -23,18 +24,15 @@ async function addUser(user, options) {
   // Hashes user password
   user.password = await scrypt.hash(user.password)
 
-  return userModel.addUser(user)
+  return User.create(user)
 }
 
 function updateUser(user, { id }) {
-
-  user.id = id
-
-  return userModel.updateUser(user, id)
+  return User.update(user)
 }
 
 function removeUser({ id }) {
-  return userModel.removeUser(id)
+  return User.remove(id)
 }
 
 export default {
