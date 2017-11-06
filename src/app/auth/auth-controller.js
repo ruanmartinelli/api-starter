@@ -3,12 +3,12 @@ import _ from 'lodash'
 import jwt from 'jsonwebtoken'
 import scrypt from 'scrypt-for-humans'
 import error from 'util/error'
-import userController from 'app/user/user-controller'
+import User from 'model/user'
 
 const { JWT_EXPIRES_IN, JWT_SECRET } = process.env
 
 async function login ({ email, password }) {
-  const user = await userController.getUsers({ email }).then(_.head)
+  const user = await User.find({ email }).then(_.head)
 
   if (!user) throw error.unauthorized('User not found')
 
