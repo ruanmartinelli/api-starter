@@ -2,7 +2,6 @@ import { isEmpty } from 'lodash'
 import scrypt from 'scrypt-for-humans'
 
 import error from 'util/error'
-import userModel from './user-model'
 import User from 'model/user'
 
 function getUsers({ id, email }) {
@@ -15,7 +14,7 @@ function getUser({ id }) {
 
 async function addUser(user, options) {
   const { email } = user
-  const savedUser = await userModel.getUsers({ email })
+  const savedUser = await User.find({ email })
 
   if (!isEmpty(savedUser)) {
     throw error.validation('User already exists')
