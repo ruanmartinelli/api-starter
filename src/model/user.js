@@ -10,7 +10,6 @@ const options = {
   foreignColumns: [],
   idAttribute: 'id',
   camelCase: true,
-  timestamps: true,
   beforeCreate: user => validateSchema(user, UserSchema),
   beforeUpdate: user => validateSchema(user, UserSchema)
 }
