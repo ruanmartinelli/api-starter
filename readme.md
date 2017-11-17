@@ -16,7 +16,6 @@
 * [Knex](http://knexjs.org/) SQL query builder
 * [Ava](https://github.com/avajs) for concurrent tests
 * [Babel](https://babeljs.io) JS transpiler
-* [Firebase](https://github.com/firebase/firebase-js-sdk) Firebase JS SKD
 * [Joi](https://github.com/hapijs/joi) schema validator
 * [JWT](https://jwt.io/) for stateless authentication
 
@@ -26,17 +25,19 @@ Folders look like this:
 
 ```bash
 .
-├── /test/                      # Tests
-├── /src/                       # Source files
-│   ├── /db/                    # Database connection module
-│   ├── /util/                  # Reusable modules
-|   ├── /script/                # SQL, bash, JS, etc.
-|   ├── /job/                   # Recurring jobs
-│   └── /app/                   # API modules (i.g. Users, Contacts)
-├── .env                        # Env. secrets and credentials 
-├── index.js                    # Entry file
-├── .babelrc                    # Babel configuration file
-└── apidoc.json                 # APIDoc configuration file
+├── src
+│   ├── api         # API modules (i.g. user, auth, etc.) 
+│   ├── db          # Database connection module
+│   ├── job         # Recurring jobs
+│   ├── middleware  # Express middlewares
+│   ├── migration   # Database migrations
+│   ├── model       # Application model classes
+│   ├── schema      # Schemas
+│   ├── script      # Script files (sql, bash, etc.)
+│   ├── util        # Resuable modules
+│   └── index.js    # Application entry file
+└── test            # Test files
+
 ```
 _Note: some files were omitted for simplicity._
 
@@ -54,11 +55,12 @@ cd <NEW_NAME>
 mv .env.example .env
 ```
 
-3. Create the MySQL database:
+3. Run migrations:
 
 ```bash
-npm run create-db
+npm run database:latest
 ```
+_Note: this assumes you have MySQL installed_
 
 4. Run
 
@@ -103,67 +105,10 @@ Generate API documentation:
 npm run docs
 ```
 
-### Creating API routes
-
-Say you want to create an Unicorn API :unicorn:
-
-1. Create files:
-
-```bash
-mkdir src/app/unicorn && cd src/app/unicorn
-touch index.js 
-
-# recommended
-touch unicorn-controller.js 
-touch unicorn-model.js
-
-# optional
-touch unicorn-i18n.js
-touch unicorn-middleware.js
-```
-
-2. Add the following code to `unicorn/index.js`:
-
-```js
-// Note: "app" is the express instance
-
-// Public routes
-function initPublic (app) { }
-
-// Private routes (access token is needed)
-function initPrivate (app) { }
-
-export default { initPublic, initPrivate }
-```
-
-3. Import and init the functions on the app entry file (`src/app/index.js`):
-
-```js
-import unicornRoutes from './unicorn'
-
-function init (app) {
-
-  // ...
-
-  unicornRoutes.initPublic(app)
-
-  // Everything requires an access token below this middleware
-  app.use(authMiddleware)
-
-  unicornRoutes.initPrivate(app)
-
-  // ...
-}
-
-export default { init }
-```
-
-4. Write some badass, cool-looking tests :eyeglasses:
-
 ### Conventions
 
-- Folder and file names are always on singular (eg. `*-controller.js`, `script/` )
-- `function x() { }` is better than `const x = () => {}`
+- Folder and file names are always on singular (eg. `user.js`, `script/` )
+- `function x() { }` instead of `const x = () => {}`
 - All [Standard](https://standardjs.com) rules
 
 ### License
