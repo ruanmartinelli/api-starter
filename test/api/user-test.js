@@ -1,13 +1,13 @@
 import { isObject, isArray, isEmpty } from 'lodash'
 
-import userController from 'app/user/user-controller'
+import user from 'api/user'
 import { createUser } from '../helpers/user'
 
 module.exports = (request, test) => {
   let _user = {}
 
   test.before(async t => {
-    _user = await userController.addUser(createUser())
+    _user = await user.add(createUser())
   })
 
   test('Users: add new user', async t => {

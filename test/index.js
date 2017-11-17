@@ -5,16 +5,16 @@ import test from 'ava'
 import axios from 'axios'
 
 import { createUser } from './helpers/user'
-import userController from 'app/user/user-controller'
-import authController from 'app/auth/auth-controller'
+import auth from 'api/auth'
+import user from 'api/user'
 
 test.before(async t => {
   const _user = createUser()
   const { email, password } = _user
 
-  await userController.addUser(_user)
+  await user.add(_user)
 
-  const { token } = await authController.login({ email, password })
+  const { token } = await auth.login({ email, password })
 
   axios.defaults.baseURL = `http://localhost:${process.env.APP_PORT}/`
   axios.defaults.headers.common['Authorization'] = token

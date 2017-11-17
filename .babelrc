@@ -16,7 +16,8 @@
           "app": "./src/app",
           "util": "./src/util",
           "schema": "./src/schema",
-          "model": "./src/model"
+          "model": "./src/model",
+          "api":"./src/api"
         }
       }
     ]
