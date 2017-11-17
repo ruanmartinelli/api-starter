@@ -30,7 +30,6 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "express-query-boolean": "^1.0.0",
-    "express-validator": "^4.1.1",
     "faker": "^4.1.0",
     "firebase": "^4.5.0",
     "joi": "^11.1.1",
@@ -41,7 +40,6 @@
     "mysql": "^2.13.0",
     "node-schedule": "^1.2.5",
     "scrypt-for-humans": "^2.0.5",
-    "treeize": "^2.1.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
