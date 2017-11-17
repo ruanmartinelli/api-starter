@@ -15,7 +15,9 @@
           "db": "./src/db",
           "app": "./src/app",
           "util": "./src/util",
-          "schema": "./src/schema"
+          "schema": "./src/schema",
+          "model": "./src/model",
+          "api":"./src/api"
         }
       }
     ]
