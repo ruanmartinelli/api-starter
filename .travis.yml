@@ -18,6 +18,7 @@ env:
 
 before_install:
   - mysql -u "root" -e 'CREATE DATABASE travis_db;'
+  - pip install --user codecov
 
 before_script:
   - npm i -g knex
@@ -25,3 +26,6 @@ before_script:
 
 script:
   - npm test
+
+after_success:
+  - codecov --file coverage/lcov.info --disable search
