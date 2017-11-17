@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production npm run database:latest && NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
     "test": "npm run lint:fix && NODE_ENV=test ava test/index.js --verbose",
-    "test:coverage": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "test:coverage": "NODE_ENV=test nyc ava test/index.js && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test:watch": "NODE_ENV=test ava test/index.js --verbose --watch",
     "lint": "./node_modules/.bin/standard src/**",
     "lint:fix": "./node_modules/.bin/standard  src/** --fix",
