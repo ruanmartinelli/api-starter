@@ -1,5 +1,5 @@
 {
-  "name": "node-api",
+  "name": "api-starter",
   "version": "2.0.0",
   "license": "MIT",
   "description": "Starting point for a Node.js API",
