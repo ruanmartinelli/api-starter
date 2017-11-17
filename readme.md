@@ -49,20 +49,26 @@ _Note: some files were omitted for simplicity._
 git clone https://github.com/ruanmartinelli/api-starter.git <NEW_NAME>
 cd <NEW_NAME>
 ```
-2. Create a .env file (remember to add your keys)
+2. Install dependencies
+
+```bash
+yarn install
+```
+
+3. Create a .env file (remember to add your keys)
 
 ```bash
 mv .env.example .env
 ```
 
-3. Run migrations:
+4. Run migrations:
 
 ```bash
 npm run database:latest
 ```
 _Note: this assumes you have MySQL installed_
 
-4. Run
+5. Run
 
 ```bash
 npm run dev
