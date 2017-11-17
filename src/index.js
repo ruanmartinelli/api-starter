@@ -5,11 +5,10 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import boolParser from 'express-query-boolean'
 import expressValidator from 'express-validator'
-import app from 'app/'
 import errorHandlers from 'util/error-handlers'
 import checkEnvVars from 'util/check-env-vars'
 import jobs from './job'
-// import { initFirebase } from 'util/firebase'
+import api from './api'
 
 checkEnvVars()
 
@@ -24,10 +23,8 @@ server.use(boolParser())
 server.use(express.static('docs'))
 server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' }))
 
-// initFirebase()
-
 jobs.init()
-app.init(server)
+api.init(server)
 
 server.use(errorHandlers.notFound)
 server.use(errorHandlers.validationError)

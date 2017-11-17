@@ -1,7 +1,7 @@
 import { isNil } from 'lodash'
 
 import { createUser } from '../helpers/user'
-import userController from 'app/user/user-controller'
+import user from 'api/user'
 
 module.exports = (request, test) => {
   let _user = {}
@@ -10,7 +10,7 @@ module.exports = (request, test) => {
   test.before(async t => {
     const newUser = createUser()
     _password = newUser.password
-    _user = await userController.addUser(newUser)
+    _user = await user.add(newUser)
   })
 
   test('Auth: successful login', async t => {
