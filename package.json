@@ -5,10 +5,8 @@
   "description": "Starting point for a Node.js API",
   "author": "Ruan Martinelli <martinelliruan@gmail.com>",
   "scripts": {
-    "start":
-      "NODE_ENV=production npm run database:latest && NODE_ENV=production node index.js",
-    "dev":
-      "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
+    "start": "NODE_ENV=production npm run database:latest && NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
     "test": "npm run lint:fix && NODE_ENV=test ava test/index.js --verbose",
     "test:coverage": "NODE_ENV=test nyc ava test/index.js && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test:watch": "NODE_ENV=test ava test/index.js --verbose --watch",
@@ -35,6 +33,7 @@
     "express-query-boolean": "^1.0.0",
     "faker": "^4.1.0",
     "firebase": "^4.5.0",
+    "helmet": "^3.9.0",
     "joi": "^11.1.1",
     "jsonwebtoken": "^7.4.1",
     "knex": "^0.13.0",
@@ -57,10 +56,14 @@
   },
   "ava": {
     "babel": "inherit",
-    "require": ["babel-register"]
+    "require": [
+      "babel-register"
+    ]
   },
   "engines": {
     "node": "7.10.1"
   },
-  "pre-commit": ["test"]
+  "pre-commit": [
+    "test"
+  ]
 }

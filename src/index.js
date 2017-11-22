@@ -8,12 +8,14 @@ import errorHandlers from 'util/error-handlers'
 import checkEnvVars from 'util/check-env-vars'
 import jobs from './job'
 import api from './api'
+import helmet from 'helmet'
 
 checkEnvVars()
 
 const server = express()
 const port = process.env.PORT || process.env.APP_PORT
 
+server.use(helmet({ frameguard: { action: 'deny' } }))
 server.use(cors())
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
@@ -34,7 +36,9 @@ server.listen(port, err => {
   if (err) throw err
 
   console.log(`
-  Server listening in ${process.env.NODE_ENV.toUpperCase()} mode on port ${port}...
+  Server listening in ${process.env.NODE_ENV.toUpperCase()} mode on port ${
+    port
+  }...
   `)
 })
 
