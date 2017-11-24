@@ -13,7 +13,7 @@ env:
   DB_USER=root
   DB_PASSWORD=
   DB_DATABASE=travis_db
-  JWT_SECRET=a10ec58a-a0f2-4ac4-8393-c866d813b8d1
+  JWT_SECRET=a10ec58a_a0f2_4ac4_8393_c866d813b8d1
   JWT_EXPIRES_IN=1h
 
 before_install:
