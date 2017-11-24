@@ -6,11 +6,16 @@ import bodyParser from 'body-parser'
 import boolParser from 'express-query-boolean'
 import errorHandlers from 'util/error-handlers'
 import checkEnvVars from 'util/check-env-vars'
+import checkDbExists from 'util/check-db-exists'
 import jobs from './job'
 import api from './api'
 import helmet from 'helmet'
 
 checkEnvVars()
+
+;(async () => {
+  await checkDbExists()
+})()
 
 const server = express()
 const port = process.env.PORT || process.env.APP_PORT
