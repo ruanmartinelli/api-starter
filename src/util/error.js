@@ -1,4 +1,4 @@
-function validation (message) {
+function validation(message) {
   return {
     status: 422,
     success: false,
@@ -6,7 +6,7 @@ function validation (message) {
   }
 }
 
-function unauthorized (message) {
+function unauthorized(message) {
   return {
     status: 401,
     success: false,
@@ -14,7 +14,7 @@ function unauthorized (message) {
   }
 }
 
-function forbidden () {
+function forbidden() {
   return {
     status: 403,
     success: false,
@@ -22,8 +22,42 @@ function forbidden () {
   }
 }
 
+export class ValidationError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = this.constructor.name
+    Error.captureStackTrace(this, this.constructor)
+    this.status = 422
+  }
+}
+
+export class ForbiddenError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = this.constructor.name
+    Error.captureStackTrace(this, this.constructor)
+    this.status = 403
+  }
+}
+
+export class UnauthorizedError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = this.constructor.name
+    Error.captureStackTrace(this, this.constructor)
+    this.status = 401
+  }
+}
+
+export class NotFoundError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = this.constructor.name
+    Error.captureStackTrace(this, this.constructor)
+    this.status = 401
+  }
+}
+
 export default {
-  validation,
-  forbidden,
-  unauthorized
+  forbidden, unauthorized, validation
 }

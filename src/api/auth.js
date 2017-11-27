@@ -2,7 +2,7 @@ import 'dotenv/config'
 import _ from 'lodash'
 import jwt from 'jsonwebtoken'
 import scrypt from 'scrypt-for-humans'
-import error from 'util/error'
+import {UnauthorizedError} from 'util/error'
 import User from 'model/user'
 
 const { JWT_EXPIRES_IN, JWT_SECRET } = process.env
@@ -19,13 +19,13 @@ const auth = {
 
     const user = await User.find({ email }).then(_.head)
 
-    if (!user) throw error.unauthorized('User not found')
+    if (!user) throw new UnauthorizedError('User not found')
 
     // Verify password
     try {
       await scrypt.verifyHash(password, user.password)
     } catch (err) {
-      throw error.unauthorized('Wrong password')
+      throw new UnauthorizedError('Wrong password')
     }
 
     const payload = {

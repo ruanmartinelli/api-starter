@@ -1,11 +1,10 @@
 import { isEmpty, pick } from 'lodash'
 import scrypt from 'scrypt-for-humans'
 
-import error from 'util/error'
 import User from 'model/user'
+import { ValidationError } from 'util/error'
 
 const user = {
-
   read(options) {
     const { id } = options
 
@@ -22,11 +21,11 @@ const user = {
   async add(user, options) {
     const { email } = user
 
-    if (!email) throw error.validation('User has no email')
+    if (!email) throw new ValidationError('User has no email')
 
     const saved = await User.find({ email })
 
-    if (!isEmpty(saved)) throw error.validation('User already exists')
+    if (!isEmpty(saved)) throw new ValidationError('User already exists')
 
     // Hashes user password
     user.password = await scrypt.hash(user.password)

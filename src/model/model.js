@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import _ from 'lodash'
 import db from 'db/'
-import error from 'util/error'
+import {ValidationError} from 'util/error'
 
 class Model {
   constructor(options) {
@@ -52,7 +52,7 @@ class Model {
 
   async update(obj) {
     if (!obj[this.idAttribute]) {
-      throw error.validation('Error updating object: Missing ID field')
+      throw new ValidationError('Error updating object: Missing ID field')
     }
 
     await this.beforeUpdate(obj)
@@ -72,7 +72,7 @@ class Model {
   }
 
   async remove(id) {
-    if (!id) return error.validation('Error removing object: Missing ID field')
+    if (!id) throw new ValidationError('Error removing object: Missing ID field')
 
     return db(this.tableName)
       .where(this.idAttribute, id)

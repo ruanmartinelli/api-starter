@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import error from 'util/error'
+import {ForbiddenError} from 'util/error'
 
 /**
  * Middleware to check if the user has proper
@@ -8,7 +8,7 @@ import error from 'util/error'
 function authMiddleware (req, res, next) {
   const token = req.headers['Authorization'] || req.get('Authorization')
 
-  if (!token) return next(error.forbidden('No token provided'))
+  if (!token) return next(new ForbiddenError('No token provided'))
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) return next(err)

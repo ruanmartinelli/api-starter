@@ -1,37 +1,55 @@
 import { bgBlue, blue } from 'chalk'
 
-function notFound (req, res, next) {
+function notFound(req, res, next) {
   res.status(404)
 
   res.send({
     status: 404,
     success: false,
-    message: 'Route not found'
+    message: 'Resource not found'
   })
 }
 
-function validationError (err, req, res, next) {
-  if (!err.status || err.status !== 422) return next(err)
+function validationError(err, req, res, next) {
+  let { status, message } = err
 
-  res.status(422)
-  res.send(err)
+  if (!message) message = 'Validation Error'
+
+  if (!status || status !== 422) {
+    return next(err)
+  } else {
+    res.status(status)
+    res.send({ status, message, success: false })
+  }
 }
 
-function unauthorizedError (err, req, res, next) {
-  if (!err.status || err.status !== 401) return next(err)
+function unauthorizedError(err, req, res, next) {
+  let { status, message } = err
 
-  res.status(401)
-  res.send(err)
+  if (!message) message = 'Unauthorized'
+
+  if (!status || status !== 401) {
+    return next(err)
+  } else {
+    res.status(status)
+    res.send({ status, message, success: false })
+  }
 }
 
-function forbiddenError (err, req, res, next) {
-  if (!err.status || err.status !== 403) return next(err)
+function forbiddenError(err, req, res, next) {
+  let { status, message } = err
 
-  res.status(403)
-  res.send(err)
+  if (!message) message = 'Forbidden'
+
+  if (!status || status !== 403) {
+    return next(err)
+  } else {
+    res.status(status)
+    res.send({ status, message, success: false })
+  }
 }
 
-function serverError (err, req, res, next) {
+function serverError(err, req, res, next) {
   console.log(`
   ${blue('✖️  ✖️  ✖️  Something went wrong:  ✖️  ✖️  ✖️')}
 
