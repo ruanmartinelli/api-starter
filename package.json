@@ -18,6 +18,7 @@
     "database:rollback": "./node_modules/.bin/knex migrate:rollback"
   },
   "dependencies": {
+    "@ruanmartinelli/knex-model": "^0.1.0",
     "axios": "^0.16.2",
     "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-transform-runtime": "^6.23.0",

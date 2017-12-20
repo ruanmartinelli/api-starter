@@ -30,7 +30,7 @@ const user = {
     // Hashes user password
     user.password = await scrypt.hash(user.password)
 
-    return User.create(user)
+    return User.insert(user)
   },
 
   edit(user, options) {
