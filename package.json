@@ -50,7 +50,6 @@
     "codecov": "^3.0.0",
     "nodemon": "^1.11.0",
     "nyc": "^11.3.0",
-    "pre-commit": "^1.2.2",
     "standard": "^10.0.2"
   },
   "ava": {
@@ -61,8 +60,5 @@
   },
   "engines": {
     "node": "9.2.0"
-  },
-  "pre-commit": [
-    "test"
-  ]
+  }
 }
