@@ -11,7 +11,14 @@ export default function http (apiMethod) {
   return function apiHandler (req, res, next) {
 
     // Merge req.query, req.params and res.locals on a single object
-    let options = extend({}, req.query, req.params, { context: res.locals })
+    let options = extend(
+      {},
+      { query: req.query },
+      { params: req.params },
+      { context: res.locals }
+    )
+
+
     let object = req.body
 
     // If this is a GET or DELETE req.body should be null

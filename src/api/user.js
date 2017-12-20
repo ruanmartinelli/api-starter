@@ -6,14 +6,14 @@ import { ValidationError } from 'util/error'
 
 const user = {
   read(options) {
-    const { id } = options
+    const { id } = options.params
 
     return User.findById(id)
   },
 
   browse(options) {
     const attrs = ['id', 'email']
-    const filter = pick(options, attrs)
+    const filter = pick(options.query, attrs)
 
     return User.find(filter)
   },
@@ -34,13 +34,13 @@ const user = {
   },
 
   edit(user, options) {
-    user.id = options.id
+    user.id = options.params.id
 
     return User.update(user)
   },
 
   destroy(options) {
-    const { id } = options
+    const { id } = options.params
 
     return User.remove(id)
   }

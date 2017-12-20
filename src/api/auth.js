@@ -14,8 +14,7 @@ const auth = {
    * @param {{email, password}} options
    * @return {object} object with JWT token
    */
-  async login(options) {
-    const { email, password } = options
+  async login({ email, password }) {
 
     const user = await User.find({ email }).then(_.head)
 
