@@ -5,17 +5,23 @@ import User from 'model/user'
 import { ValidationError } from 'util/error'
 
 const user = {
+  browse(options) {
+    const attrs = ['id', 'email']
+    const filter = pick(options.query, attrs)
+
+    return User.find(filter)
+  },
+
   read(options) {
     const { id } = options.params
 
     return User.findById(id)
   },
 
-  browse(options) {
-    const attrs = ['id', 'email']
-    const filter = pick(options.query, attrs)
+  edit(user, options) {
+    user.id = options.params.id
 
-    return User.find(filter)
+    return User.update(user)
   },
 
   async add(user, options) {
@@ -31,12 +37,6 @@ const user = {
     user.password = await scrypt.hash(user.password)
 
     return User.insert(user)
-  },
-
-  edit(user, options) {
-    user.id = options.params.id
-
-    return User.update(user)
   },
 
   destroy(options) {
