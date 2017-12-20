@@ -4,5 +4,6 @@ module.exports.createUser = () => ({
   email: faker.internet.email(),
   name: faker.name.findName(),
   username: faker.internet.userName(),
-  password: faker.internet.password()
+  password: faker.internet.password(),
+  role: 'user'
 })

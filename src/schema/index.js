@@ -5,7 +5,8 @@ const User = Joi.object({
   email: Joi.string().email().max(255).required(),
   name: Joi.string().max(255).required(),
   username: Joi.string().min(3).max(255).required(),
-  password: Joi.string().max(255)
+  password: Joi.string().max(255),
+  role: Joi.string().required().allow(['user', 'admin'])
 })
 
 const UserFilter = Joi.object({
