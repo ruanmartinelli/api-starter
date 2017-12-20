@@ -11,6 +11,9 @@ const config = {
   migrations: {
     tableName: 'knex_migrations',
     directory: `./src/migration/`
+  },
+  seeds: {
+    directory: `./src/seed/`
   }
 }
 
