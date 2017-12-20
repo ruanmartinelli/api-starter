@@ -1,13 +1,20 @@
+const scrypt = require('scrypt-for-humans')
 
-exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
-    });
-};
+exports.seed = async (knex) => {
+  await knex('user').del()
+
+  return knex('user').insert([
+    {
+      email: 'jonsnow@hotmail.com',
+      name: 'Jon Snow',
+      username: 'jj',
+      password: await scrypt.hash('123')
+    },
+    {
+      email: 'danny.stormborn@gmail.com',
+      name: 'Daenerys',
+      username: 'danny_dragon_queen',
+      password: await scrypt.hash('abc')
+    }
+  ])
+}

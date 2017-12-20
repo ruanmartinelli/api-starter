@@ -14,8 +14,9 @@
     "lint:fix": "./node_modules/.bin/standard  src/** --fix",
     "docs": "./node_modules/.bin/apidoc -i src/ -o docs",
     "docs:serve": "npm run docs && npm run dev",
-    "database:latest": "./node_modules/.bin/knex migrate:latest",
-    "database:rollback": "./node_modules/.bin/knex migrate:rollback"
+    "db:latest": "./node_modules/.bin/knex migrate:latest",
+    "db:rollback": "./node_modules/.bin/knex migrate:rollback",
+    "db:seed": "./node_modules/.bin/knex seed:run"
   },
   "dependencies": {
     "@ruanmartinelli/knex-model": "^0.1.0",
