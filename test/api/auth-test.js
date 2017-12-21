@@ -1,7 +1,8 @@
 import { isNil } from 'lodash'
 
-import { createUser } from '../helpers/user'
+// import { createUser } from '../helpers/user'
 import user from 'api/user'
+import { user as createUser } from '../helpers'
 
 export default (request, test) => {
   let _user = {}

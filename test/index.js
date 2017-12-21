@@ -17,6 +17,8 @@ test.before(async t => {
   axios.defaults.validateStatus = status => true
 })
 
+test.todo('.')
+
 Promise.all([
   import('./api/user-test'),
   import('./api/auth-test'),
