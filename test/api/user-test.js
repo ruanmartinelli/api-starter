@@ -1,5 +1,6 @@
 import { isObjectLike, isArray, isNil } from 'lodash'
 import user from 'api/user'
+import auth from 'api/auth'
 import { user as createUser, admin } from '../helpers'
 
 const resource = 'user'
@@ -26,6 +27,29 @@ export default (request, test) => {
     t.is(res.status, 200)
     t.true(isObjectLike(res.data))
     t.is(res.data.id, context.user.id)
+  })
+
+  test(`DELETE ${path} - should fail if user is not an admin`, async t => {
+    const saved = await user.add(createUser())
+    const res = await request.delete(`${path}/${saved.id}`)
+
+    t.is(res.status, 401)
+  })
+
+  test(`DELETE ${path}`, async t => {
+    const saved = await user.add(createUser())
+    const { token } = await auth.login({
+      email: context.admin.email,
+      password: '123'
+    })
+
+    const res = await request.delete(`${path}/${saved.id}`, {
+      headers: {
+        Authorization: token
+      }
+    })
+
+    t.is(res.status, 204)
   })
 
   // test('Users: add new user', async t => {

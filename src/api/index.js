@@ -2,9 +2,9 @@ import user from './user'
 import auth from './auth'
 import http from 'util/http'
 import authMiddleware from '../middleware/auth'
+import requireRole from '../middleware/require-role'
 
 const api = {
-
   /**
    * Initializes API routes.
    * @param {object} app express instance
@@ -20,7 +20,7 @@ const api = {
     app.get('/api/user/', http(user.browse))
     app.post('/api/user', http(user.add))
     app.put('/api/user/:id', http(user.edit))
-    app.del('/api/user/:id', http(user.destroy))
+    app.del('/api/user/:id', requireRole('admin'), http(user.destroy))
   }
 }
 
