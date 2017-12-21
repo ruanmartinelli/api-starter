@@ -1,4 +1,4 @@
-# API Starter
+# api-starter
 
 <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
 [![Build Status](https://travis-ci.org/ruanmartinelli/api-starter.svg?branch=master)](https://travis-ci.org/ruanmartinelli/api-starter)
@@ -7,7 +7,7 @@
 
 ### Requirements
 
-* Node.js 7.6.0+
+* Node.js 9+
 * MySQL
 
 ### Dependencies
@@ -32,6 +32,7 @@ Folders look like this:
 │   ├── middleware  # Express middlewares
 │   ├── migration   # Database migrations
 │   ├── model       # Application model classes
+│   ├── seed        # Database seeds
 │   ├── schema      # Schemas
 │   ├── script      # Script files (sql, bash, etc.)
 │   ├── util        # Resuable modules
