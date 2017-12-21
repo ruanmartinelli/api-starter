@@ -12,17 +12,31 @@ export default (request, test) => {
   test.before(async t => {
     context.user = await user.add(createUser())
     context.admin = await user.add(admin())
+
+    const { token } = await auth.login({
+      email: context.admin.email,
+      password: '123'
+    })
+
+    context.adminOpts = {
+      headers: {
+        Authorization: token
+      }
+    }
   })
 
   test(`GET ${path}/`, async t => {
-    const res = await request.get(`${path}`)
+    const res = await request.get(`${path}`, context.adminOpts)
 
     t.is(res.status, 200)
     t.true(isArray(res.data))
   })
 
   test(`GET ${path}/:id`, async t => {
-    const res = await request.get(`${path}/${context.user.id}`)
+    const res = await request.get(
+      `${path}/${context.user.id}`,
+      context.adminOpts
+    )
 
     t.is(res.status, 200)
     t.true(isObjectLike(res.data))
@@ -30,7 +44,45 @@ export default (request, test) => {
     t.true(!res.data.password) // should not expose password hash
   })
 
-  test(`DELETE ${path} - should fail if user is not an admin`, async t => {
+  test(`POST ${path}`, async t => {
+    const _user = createUser()
+    const res = await request.post(`${path}`, _user, context.adminOpts)
+
+    t.is(res.status, 200)
+    t.is(isObjectLike(res.data), true)
+    t.is(res.data.email, _user.email)
+  })
+
+  test(`POST ${path} - fail if adding an existing user`, async t => {
+    const res = await request.post(`${path}`, context.user, context.adminOpts)
+
+    t.is(res.status, 422)
+  })
+
+  test(`PUT ${path}/:id`, async t => {
+    const _user = Object.assign(context.user, { username: 'anotherusername' })
+    const res = await request.put(
+      `${path}/${context.user.id}`,
+      _user,
+      context.adminOpts
+    )
+
+    t.is(res.status, 200)
+  })
+
+  test(`PUT ${path}/:id - fail if user is invalid`, async t => {
+    const _user = Object.assign({}, context.user)
+    delete _user.username
+    const res = await request.put(
+      `${path}/${context.user.id}`,
+      _user,
+      context.adminOpts
+    )
+
+    t.is(res.status, 422)
+  })
+
+  test(`DELETE ${path} - fail if user is not an admin`, async t => {
     const saved = await user.add(createUser())
     const res = await request.delete(`${path}/${saved.id}`)
 
@@ -39,85 +91,9 @@ export default (request, test) => {
 
   test(`DELETE ${path}`, async t => {
     const saved = await user.add(createUser())
-    const { token } = await auth.login({
-      email: context.admin.email,
-      password: '123'
-    })
-
-    const res = await request.delete(`${path}/${saved.id}`, {
-      headers: {
-        Authorization: token
-      }
-    })
+    const res = await request.delete(`${path}/${saved.id}`, context.adminOpts)
 
     t.is(res.status, 204)
   })
 
-  // test('Users: add new user', async t => {
-  //   const user = createUser()
-  //   // prettier-ignore
-  //   const { data: saved, status } = await request.post(`/api/user/`, user)
-
-  //   t.is(status, 200)
-  //   t.is(isObject(saved), true)
-  //   t.is(saved.email, user.email)
-  //   t.is(saved.username, user.username)
-  // })
-
-  // test('Users: add existing user', async t => {
-  //   const user = _user
-  //   const { status } = await request.post(`/api/user/`, user)
-
-  //   t.is(status, 422)
-  // })
-
-  // test('Users: update existing user', async t => {
-  //   const user = Object.assign(_user, { username: 'NedStark11' })
-  //   // prettier-ignore
-  //   const { data: updated, status } = await request.put(`/api/user/${user.id}`, user)
-
-  //   t.is(status, 200)
-  //   t.is(isObject(updated), true)
-  //   t.is(updated.email, user.email)
-  //   t.is(updated.username, 'NedStark11')
-  // })
-
-  // test('Users: update invalid user returns 422', async t => {
-  //   const user = Object.assign({}, _user)
-  //   delete user.username
-  //   const { data, status } = await request.put(`/api/user/${user.id}`, user)
-
-  //   t.is(status, 422)
-  //   t.is(data.success, false)
-  // })
-
-  // // test('Users: get all users', async t => {
-  // //   const { data: users, status } = await request.get(`/api/user/`)
-
-  // //   t.is(status, 200)
-  // //   t.is(isArray(users), true)
-  // //   // Make sure the user is present
-  // //   t.is(users.filter(u => u.id === _user.id).length, 1)
-  // // })
-
-  // test('Users: get a existing user', async t => {
-  //   const { id } = _user
-  //   const { data: user, status } = await request.get(`/api/user/${id}`)
-
-  //   t.is(status, 200)
-  //   t.is(isObject(user), true)
-  //   t.is(user.id, id)
-  // })
-
-  // test('Users: removes a user', async t => {
-  //   // Adds a user
-  //   const { data: savedUser } = await request.post(`/api/user/`, createUser())
-  //   // Deletes it
-  //   const { status } = await request.delete(`/api/user/${savedUser.id}`)
-  //   // Tries to fetch the deleted user
-  //   const { data: user } = await request.get(`/api/user/${savedUser.id}`)
-
-  //   t.is(status, 204)
-  //   t.is(isEmpty(user), true)
-  // })
 }

@@ -16,10 +16,10 @@ const api = {
 
     app.use(authMiddleware)
 
-    app.get('/api/user/:id', http(user.read))
-    app.get('/api/user/', http(user.browse))
-    app.post('/api/user', http(user.add))
-    app.put('/api/user/:id', http(user.edit))
+    app.get('/api/user/:id', requireRole('admin'), http(user.read))
+    app.get('/api/user/', requireRole('admin'), http(user.browse))
+    app.post('/api/user', requireRole('admin'), http(user.add))
+    app.put('/api/user/:id', requireRole('admin'), http(user.edit))
     app.del('/api/user/:id', requireRole('admin'), http(user.destroy))
   }
 }
