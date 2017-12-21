@@ -64,7 +64,7 @@ mv .env.example .env
 4. Run migrations:
 
 ```bash
-npm run database:latest
+npm run db:latest
 ```
 _Note: this assumes you have MySQL installed_
 
