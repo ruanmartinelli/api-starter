@@ -21,7 +21,7 @@ before_install:
 
 before_script:
   - npm i -g knex
-  - npm run database:latest
+  - npm run db:latest
 
 script:
   - npm test
