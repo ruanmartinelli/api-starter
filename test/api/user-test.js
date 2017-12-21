@@ -1,5 +1,6 @@
 import { isObjectLike, isArray, isNil } from 'lodash'
 import user from 'api/user'
+import auth from 'api/auth'
 import { user as createUser, admin } from '../helpers'
 
 const resource = 'user'
@@ -11,88 +12,88 @@ export default (request, test) => {
   test.before(async t => {
     context.user = await user.add(createUser())
     context.admin = await user.add(admin())
+
+    const { token } = await auth.login({
+      email: context.admin.email,
+      password: '123'
+    })
+
+    context.adminOpts = {
+      headers: {
+        Authorization: token
+      }
+    }
   })
 
   test(`GET ${path}/`, async t => {
-    const res = await request.get(`${path}`)
+    const res = await request.get(`${path}`, context.adminOpts)
 
     t.is(res.status, 200)
     t.true(isArray(res.data))
   })
 
   test(`GET ${path}/:id`, async t => {
-    const res = await request.get(`${path}/${context.user.id}`)
+    const res = await request.get(
+      `${path}/${context.user.id}`,
+      context.adminOpts
+    )
 
     t.is(res.status, 200)
     t.true(isObjectLike(res.data))
     t.is(res.data.id, context.user.id)
+    t.true(!res.data.password) // should not expose password hash
   })
 
-  // test('Users: add new user', async t => {
-  //   const user = createUser()
-  //   // prettier-ignore
-  //   const { data: saved, status } = await request.post(`/api/user/`, user)
+  test(`POST ${path}`, async t => {
+    const _user = createUser()
+    const res = await request.post(`${path}`, _user, context.adminOpts)
 
-  //   t.is(status, 200)
-  //   t.is(isObject(saved), true)
-  //   t.is(saved.email, user.email)
-  //   t.is(saved.username, user.username)
-  // })
+    t.is(res.status, 200)
+    t.is(isObjectLike(res.data), true)
+    t.is(res.data.email, _user.email)
+  })
 
-  // test('Users: add existing user', async t => {
-  //   const user = _user
-  //   const { status } = await request.post(`/api/user/`, user)
+  test(`POST ${path} - fail if adding an existing user`, async t => {
+    const res = await request.post(`${path}`, context.user, context.adminOpts)
 
-  //   t.is(status, 422)
-  // })
+    t.is(res.status, 422)
+  })
 
-  // test('Users: update existing user', async t => {
-  //   const user = Object.assign(_user, { username: 'NedStark11' })
-  //   // prettier-ignore
-  //   const { data: updated, status } = await request.put(`/api/user/${user.id}`, user)
+  test(`PUT ${path}/:id`, async t => {
+    const _user = Object.assign(context.user, { username: 'anotherusername' })
+    const res = await request.put(
+      `${path}/${context.user.id}`,
+      _user,
+      context.adminOpts
+    )
 
-  //   t.is(status, 200)
-  //   t.is(isObject(updated), true)
-  //   t.is(updated.email, user.email)
-  //   t.is(updated.username, 'NedStark11')
-  // })
+    t.is(res.status, 200)
+  })
 
-  // test('Users: update invalid user returns 422', async t => {
-  //   const user = Object.assign({}, _user)
-  //   delete user.username
-  //   const { data, status } = await request.put(`/api/user/${user.id}`, user)
+  test(`PUT ${path}/:id - fail if user is invalid`, async t => {
+    const _user = Object.assign({}, context.user)
+    delete _user.username
+    const res = await request.put(
+      `${path}/${context.user.id}`,
+      _user,
+      context.adminOpts
+    )
 
-  //   t.is(status, 422)
-  //   t.is(data.success, false)
-  // })
+    t.is(res.status, 422)
+  })
 
-  // // test('Users: get all users', async t => {
-  // //   const { data: users, status } = await request.get(`/api/user/`)
+  test(`DELETE ${path} - fail if user is not an admin`, async t => {
+    const saved = await user.add(createUser())
+    const res = await request.delete(`${path}/${saved.id}`)
 
-  // //   t.is(status, 200)
-  // //   t.is(isArray(users), true)
-  // //   // Make sure the user is present
-  // //   t.is(users.filter(u => u.id === _user.id).length, 1)
-  // // })
+    t.is(res.status, 401)
+  })
 
-  // test('Users: get a existing user', async t => {
-  //   const { id } = _user
-  //   const { data: user, status } = await request.get(`/api/user/${id}`)
+  test(`DELETE ${path}`, async t => {
+    const saved = await user.add(createUser())
+    const res = await request.delete(`${path}/${saved.id}`, context.adminOpts)
 
-  //   t.is(status, 200)
-  //   t.is(isObject(user), true)
-  //   t.is(user.id, id)
-  // })
+    t.is(res.status, 204)
+  })
 
-  // test('Users: removes a user', async t => {
-  //   // Adds a user
-  //   const { data: savedUser } = await request.post(`/api/user/`, createUser())
-  //   // Deletes it
-  //   const { status } = await request.delete(`/api/user/${savedUser.id}`)
-  //   // Tries to fetch the deleted user
-  //   const { data: user } = await request.get(`/api/user/${savedUser.id}`)
-
-  //   t.is(status, 204)
-  //   t.is(isEmpty(user), true)
-  // })
 }

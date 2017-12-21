@@ -5,7 +5,7 @@ export function user() {
     email: faker.internet.email(),
     name: faker.name.findName(),
     username: faker.internet.userName(),
-    password: faker.internet.password(),
+    password: '123',
     role: 'user'
   }
 }
@@ -15,7 +15,7 @@ export function admin() {
     email: faker.internet.email(),
     name: faker.name.findName(),
     username: faker.internet.userName(),
-    password: faker.internet.password(),
+    password: '123',
     role: 'admin'
   }
 }
