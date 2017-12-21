@@ -27,6 +27,7 @@ export default (request, test) => {
     t.is(res.status, 200)
     t.true(isObjectLike(res.data))
     t.is(res.data.id, context.user.id)
+    t.true(!res.data.password) // should not expose password hash
   })
 
   test(`DELETE ${path} - should fail if user is not an admin`, async t => {
