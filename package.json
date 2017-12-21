@@ -7,7 +7,7 @@
   "scripts": {
     "start": "NODE_ENV=production npm run database:latest && NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
-    "test": "npm run lint:fix && NODE_ENV=test ava test/index.js --verbose",
+    "test": "npm run lint:fix && npm run db:seed && NODE_ENV=test ava test/index.js --verbose",
     "test:coverage": "NODE_ENV=test nyc ava test/index.js && nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test:watch": "NODE_ENV=test ava test/index.js --verbose --watch",
     "lint": "./node_modules/.bin/standard src/**",
@@ -49,6 +49,7 @@
   "devDependencies": {
     "apidoc": "^0.17.6",
     "ava": "^0.19.1",
+    "babel-plugin-dynamic-import-node": "^1.2.0",
     "codecov": "^3.0.0",
     "nodemon": "^1.11.0",
     "nyc": "^11.3.0",

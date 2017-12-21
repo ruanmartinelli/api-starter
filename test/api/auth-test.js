@@ -3,7 +3,7 @@ import { isNil } from 'lodash'
 import { createUser } from '../helpers/user'
 import user from 'api/user'
 
-module.exports = (request, test) => {
+export default (request, test) => {
   let _user = {}
   let _password = {}
 

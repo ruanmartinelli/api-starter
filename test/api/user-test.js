@@ -1,9 +1,8 @@
 import { isObject, isArray, isEmpty } from 'lodash'
-
 import user from 'api/user'
 import { createUser } from '../helpers/user'
 
-module.exports = (request, test) => {
+export default (request, test) => {
   let _user = {}
 
   test.before(async t => {
