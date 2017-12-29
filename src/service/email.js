@@ -35,9 +35,7 @@ export function sendEmail({ to = '', from = '', subject = '', content = '' }) {
 
   const email = { to, from, subject, html: content }
 
-  return transporter
-    .sendMail(email)
-    .catch(err => handleEmailError(err, email))
+  return transporter.sendMail(email).catch(err => handleEmailError(err, email))
 }
 
 function handleEmailError(err, email) {

@@ -11,5 +11,4 @@ export default (request, test) => {
 
     await t.notThrows(promise)
   })
-
 }
