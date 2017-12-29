@@ -39,23 +39,25 @@ export function sendEmail({ to = '', from = '', subject = '', content = '' }) {
 }
 
 function handleEmailError(err, email) {
-  const content = `
-  <p> from: ${email.from}
-  <p> to: ${email.to}
-  <p> subject: ${email.subject}
-  <p> content: ${email.html}
+  const info = `
+  -> Failed sending email.
 
-  <hr>
+  from: ${email.from}
+  to: ${email.to}
+  subject: ${email.subject}
+  content: ${email.html}
+
+  ---
 
   The error was:
 
-  ${err}`
+  ${err.stack}
+  `
+  console.log(info)
 
-  console.log('    -> Failed sending email.')
-
-  return sendEmail({
-    to: process.env.APP_EMAIL_SENDER,
-    subject: `There's been an error sending an email.`,
-    content
-  })
+  // return sendEmail({
+  //   to: process.env.APP_EMAIL_SENDER,
+  //   subject: `There's been an error sending an email.`,
+  //   content
+  // })
 }
