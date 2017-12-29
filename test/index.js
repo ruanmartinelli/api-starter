@@ -22,7 +22,8 @@ test.todo('.')
 Promise.all([
   import('./api/user-test'),
   import('./api/auth-test'),
-  import('./api/error-test')
+  import('./api/error-test'),
+  import('./unit/email-test')
 ]).then(fns => {
   fns.map(fn => fn.default(axios, test))
 })

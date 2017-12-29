@@ -1,9 +1,13 @@
 import 'dotenv/config'
-import { ValidationError } from 'util/error/'
+
 import nodemailer from 'nodemailer'
+import stubTransport from 'nodemailer-stub-transport'
 import { DateTime } from 'luxon'
 
-const transporter = nodemailer.createTransport({
+import { ValidationError } from 'util/error/'
+import isEnv from 'util/is-env'
+
+const smtpTransport = {
   host: process.env.SES_HOST,
   port: process.env.SES_PORT,
   secure: false,
@@ -11,19 +15,49 @@ const transporter = nodemailer.createTransport({
     user: process.env.SES_USER,
     pass: process.env.SES_PASSWORD
   }
-})
+}
 
-export function send({ to = '', from = '', subject = '', content = '' }) {
+const transport = isEnv('test') ? stubTransport() : smtpTransport
+
+const transporter = nodemailer.createTransport(transport)
+
+export function sendEmail({ to = '', from = '', subject = '', content = '' }) {
   // @CASE: no email was specified, use the address in app_email_sender env var
   if (!from) from = process.env.APP_EMAIL_SENDER
 
   // prettier-ignore
   if (!to) throw new ValidationError('Error sending email: missing recipient')
-  if (!subject) throw new ValidationError('Error sending email: missing email subject')
+  if (!subject)
+    throw new ValidationError('Error sending email: missing email subject')
 
   const date = DateTime.local().toLocaleString(DateTime.DATETIME_FULL)
-
   console.log(`[${date}] 📧  EMAIL: ${subject} \n[${date}] 📧  TO: ${to}\n`)
 
-  return transporter.sendMail({ to, from, subject, html: content })
+  const email = { to, from, subject, html: content }
+
+  return transporter
+    .sendMail(email)
+    .catch(err => handleEmailError(err, email))
+}
+
+function handleEmailError(err, email) {
+  const content = `
+  <p> from: ${email.from}
+  <p> to: ${email.to}
+  <p> subject: ${email.subject}
+  <p> content: ${email.html}
+
+  <hr>
+
+  The error was:
+
+  ${err}`
+
+  console.log('    -> Failed sending email.')
+
+  return sendEmail({
+    to: process.env.APP_EMAIL_SENDER,
+    subject: `There's been an error sending an email.`,
+    content
+  })
 }
