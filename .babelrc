@@ -1,23 +1,20 @@
 {
-  "presets": [
-    "env",
-    "stage-0"
-  ],
+  "presets": ["env", "stage-0"],
   "plugins": [
-    "transform-runtime","dynamic-import-node",
+    "transform-runtime",
+    "dynamic-import-node",
     [
       "module-resolver",
       {
-        "root": [
-          "./"
-        ],
+        "root": ["./"],
         "alias": {
           "db": "./src/db",
           "app": "./src/app",
           "util": "./src/util",
           "schema": "./src/schema",
           "model": "./src/model",
-          "api":"./src/api"
+          "api": "./src/api",
+          "service": "./src/service"
         }
       }
     ]
