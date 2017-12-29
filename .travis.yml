@@ -6,18 +6,8 @@ node_js:
 services:
   - mysql
 
-env:
-  APP_NAME=Travis
-  APP_PORT=9910
-  DB_HOST=127.0.0.1
-  DB_USER=root
-  DB_PASSWORD=
-  DB_DATABASE=travis_db
-  JWT_SECRET=a10ec58a_a0f2_4ac4_8393_c866d813b8d1
-  JWT_EXPIRES_IN=1h
-
 before_install:
-  - mysql -u "root" -e 'CREATE DATABASE travis_db;'
+  - mysql -u "root" -e 'CREATE DATABASE travisdb;'
 
 before_script:
   - npm i -g knex
