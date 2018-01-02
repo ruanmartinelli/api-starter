@@ -5,7 +5,7 @@
   "description": "Starting point for a Node.js API",
   "author": "Ruan Martinelli <martinelliruan@gmail.com>",
   "scripts": {
-    "start": "NODE_ENV=production npm run database:latest && NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production npm run db:latest && NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon index.js --ignore docs/",
     "test": "npm run lint:fix && npm run db:seed && NODE_ENV=test ava test/index.js --verbose",
     "test:coverage": "NODE_ENV=test nyc ava test/index.js && nyc report --reporter=text-lcov > coverage.lcov && codecov",
