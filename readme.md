@@ -49,6 +49,10 @@ _Note: some files were omitted for simplicity._
 ```bash
 git clone https://github.com/ruanmartinelli/api-starter.git <NEW_NAME>
 cd <NEW_NAME>
+
+# make it yours:
+rm -rf .git
+git init
 ```
 2. Install dependencies
 
