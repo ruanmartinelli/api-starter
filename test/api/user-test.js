@@ -25,14 +25,14 @@ export default (request, test) => {
     }
   })
 
-  test(`GET ${path}/`, async t => {
+  test(`[API] GET ${path}/`, async t => {
     const res = await request.get(`${path}`, context.adminOpts)
 
     t.is(res.status, 200)
     t.true(isArray(res.data))
   })
 
-  test(`GET ${path}/:id`, async t => {
+  test(`[API] GET ${path}/:id`, async t => {
     const res = await request.get(
       `${path}/${context.user.id}`,
       context.adminOpts
@@ -44,7 +44,7 @@ export default (request, test) => {
     t.true(!res.data.password) // should not expose password hash
   })
 
-  test(`POST ${path}`, async t => {
+  test(`[API] POST ${path}`, async t => {
     const _user = createUser()
     const res = await request.post(`${path}`, _user, context.adminOpts)
 
@@ -53,13 +53,13 @@ export default (request, test) => {
     t.is(res.data.email, _user.email)
   })
 
-  test(`POST ${path} - fail if adding an existing user`, async t => {
+  test(`[API] POST ${path} - fail if adding an existing user`, async t => {
     const res = await request.post(`${path}`, context.user, context.adminOpts)
 
     t.is(res.status, 422)
   })
 
-  test(`PUT ${path}/:id`, async t => {
+  test(`[API] PUT ${path}/:id`, async t => {
     const _user = Object.assign(context.user, { username: 'anotherusername' })
     const res = await request.put(
       `${path}/${context.user.id}`,
@@ -70,7 +70,7 @@ export default (request, test) => {
     t.is(res.status, 200)
   })
 
-  test(`PUT ${path}/:id - fail if user is invalid`, async t => {
+  test(`[API] PUT ${path}/:id - fail if user is invalid`, async t => {
     const _user = Object.assign({}, context.user)
     delete _user.username
     const res = await request.put(
@@ -82,14 +82,14 @@ export default (request, test) => {
     t.is(res.status, 422)
   })
 
-  test(`DELETE ${path} - fail if user is not an admin`, async t => {
+  test(`[API] DELETE ${path} - fail if user is not an admin`, async t => {
     const saved = await user.add(createUser())
     const res = await request.delete(`${path}/${saved.id}`)
 
     t.is(res.status, 401)
   })
 
-  test(`DELETE ${path}`, async t => {
+  test(`[API] DELETE ${path}`, async t => {
     const saved = await user.add(createUser())
     const res = await request.delete(`${path}/${saved.id}`, context.adminOpts)
 
