@@ -34,7 +34,7 @@
     "express": "^4.15.2",
     "express-query-boolean": "^2.0.0",
     "faker": "^4.1.0",
-    "firebase": "^5.5.4",
+    "firebase": "^5.7.1",
     "helmet": "^3.9.0",
     "joi": "^14.0.0",
     "jsonwebtoken": "^8.3.0",
