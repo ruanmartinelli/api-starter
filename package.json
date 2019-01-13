@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "apidoc": "^0.17.6",
-    "ava": "^1.0.1",
+    "ava": "1.0.1",
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "codecov": "^3.0.0",
     "nodemon": "^1.11.0",
